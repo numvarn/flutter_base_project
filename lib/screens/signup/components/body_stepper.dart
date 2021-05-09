@@ -1,3 +1,4 @@
+import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/screens/signup/components/account.dart';
 import 'package:base_project/screens/signup/components/background.dart';
 import 'package:base_project/screens/signup/components/completed_signup.dart';
@@ -109,7 +110,7 @@ class _BodyStepperState extends State<BodyStepper> {
   }
 
   // * Submit Data
-  void _onSubmitData() {
+  void _onSubmitConfirm() {
     String msg = "";
     if (accountValidate && profileValidate && contactValidate) {
       msg = "ทำการสร้างบัญชีผู้ใช้งานแล้ว";
@@ -125,6 +126,19 @@ class _BodyStepperState extends State<BodyStepper> {
       content: Text("$msg"),
       duration: Duration(seconds: 5),
     ));
+  }
+
+  void _onSubmitData() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CustomConfirmDialog(
+          title: "ดำเนินการสร้างบัญชีผู้ใช้",
+          subtitle: "กดปุ่ม ยืนยัน เพื่อดำเนินการต่อ",
+          onpress: () => _onSubmitConfirm(),
+        );
+      },
+    );
   }
 
   // * For orverride stepper button

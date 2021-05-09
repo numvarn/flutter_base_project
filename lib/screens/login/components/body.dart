@@ -1,3 +1,5 @@
+import 'package:base_project/components/dialog_confirm.dart';
+import 'package:base_project/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:base_project/screens/login/components/background.dart';
 import 'package:base_project/screens/signup/signup_screen.dart';
@@ -30,7 +32,7 @@ class _BodyState extends State<Body> {
           children: <Widget>[
             Text(
               "เข้าสู่ระบบเพื่อใช้งาน",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: appBarStyle,
             ),
             SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
@@ -55,8 +57,13 @@ class _BodyState extends State<Body> {
                 return showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
-                      content: Text("email: " + emailField + "\npassword : " + passwordField),
+                    return CustomConfirmDialog(
+                      title: "กำลังดำเนินการเข้าสู่ระบบ",
+                      subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
+                      onpress: () {
+                        print("Processing");
+                        Navigator.pop(context);
+                      },
                     );
                   },
                 );

@@ -1,3 +1,4 @@
+import 'package:base_project/constants.dart';
 import 'package:base_project/screens/signup/components/body_stepper.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class SignUpScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "สร้างบัญชีเพื่อเข้าใช้งาน",
-          style: TextStyle(color: Colors.black),
+          style: appBarStyle,
         ),
         // * for transparent appbar
         elevation: 0,

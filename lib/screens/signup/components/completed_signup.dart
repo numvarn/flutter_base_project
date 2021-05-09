@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 class CompletedSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Provider.of<SignupValidation>(context, listen: false).removeListener(() {});
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -27,7 +28,10 @@ class CompletedSignUp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("ลงทะเบียนสมบูรณ์"),
+              Text(
+                "ลงทะเบียนสมบูรณ์",
+                style: appBarStyle,
+              ),
               SizedBox(
                 height: 50,
               ),
