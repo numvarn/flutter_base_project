@@ -1,3 +1,4 @@
+import 'package:base_project/components/dialog_alert.dart';
 import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/constants.dart';
 import 'package:flutter/material.dart';
@@ -54,19 +55,34 @@ class _BodyState extends State<Body> {
             RoundedButton(
               text: "เข้าสู่ระบบ",
               press: () {
-                return showDialog(
-                  context: context,
-                  builder: (context) {
-                    return CustomConfirmDialog(
-                      title: "กำลังดำเนินการเข้าสู่ระบบ",
-                      subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
-                      onpress: () {
-                        print("Processing");
-                        Navigator.pop(context);
-                      },
-                    );
-                  },
-                );
+                if (emailField.isNotEmpty && passwordField.isNotEmpty) {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomConfirmDialog(
+                        title: "กำลังดำเนินการเข้าสู่ระบบ",
+                        subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
+                        onpress: () {
+                          print("Processing");
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  );
+                } else {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return CustomAlertDialog(
+                        title: "ข้อมูลไม่ถูกต้อง",
+                        subtitle: "กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง",
+                        onpress: () {
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  );
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),
