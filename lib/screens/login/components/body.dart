@@ -1,6 +1,7 @@
 import 'package:base_project/components/dialog_alert.dart';
 import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/constants.dart';
+import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:base_project/screens/login/components/background.dart';
 import 'package:base_project/screens/signup/signup_screen.dart';
@@ -42,7 +43,7 @@ class _BodyState extends State<Body> {
             ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
-              hintText: "Your Email",
+              hintText: "อีเมล",
               onChanged: (value) {
                 emailField = value;
               },
@@ -64,7 +65,10 @@ class _BodyState extends State<Body> {
                         subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
                         onpress: () {
                           print("Processing");
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => OperationScreen()),
+                          );
                         },
                       );
                     },
@@ -75,7 +79,7 @@ class _BodyState extends State<Body> {
                     builder: (context) {
                       return CustomAlertDialog(
                         title: "ข้อมูลไม่ถูกต้อง",
-                        subtitle: "กรุณาตรวจสอบข้อมูลใหม่อีกครั้ง",
+                        subtitle: "กรุณาตรวจสอบข้อมูลอีกครั้ง",
                         onpress: () {
                           Navigator.pop(context);
                         },

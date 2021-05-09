@@ -14,6 +14,12 @@ TextStyle appBarStyle = GoogleFonts.kanit(
   color: kTextPrimaryColor,
 );
 
+// * Bottom Bar Text Style
+TextStyle bottomTextStyle = TextStyle(
+  color: kPrimaryColor,
+  fontSize: 16,
+);
+
 // * Setup TextTheme of this application
 TextTheme baseFont = GoogleFonts.kanitTextTheme();
 
