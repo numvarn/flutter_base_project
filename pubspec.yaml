@@ -31,6 +31,8 @@ dependencies:
   smart_select: ^4.3.2
   google_fonts: ^2.0.0
   google_nav_bar: ^5.0.5
+  carousel_slider: ^3.0.0
+  sliver_tools: ^0.2.2
   line_icons: ^2.0.1
 
 dev_dependencies:

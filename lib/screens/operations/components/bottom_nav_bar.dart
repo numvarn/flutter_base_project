@@ -55,7 +55,7 @@ class BottomNavBar extends StatelessWidget {
                     textStyle: bottomTextStyle,
                   ),
                 ],
-                selectedIndex: bottomNavModel.selectedIndex,
+                selectedIndex: bottomNavModel.getSelectedIndex,
                 onTabChange: (index) {
                   bottomNavModel.setIndex(index);
                 },
