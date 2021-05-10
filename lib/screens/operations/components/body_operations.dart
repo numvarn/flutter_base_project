@@ -1,4 +1,5 @@
 import 'package:base_project/models/bottom_nav_model.dart';
+import 'package:base_project/screens/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,18 @@ class BodyOperations extends StatefulWidget {
 
 class _BodyOperationsState extends State<BodyOperations> {
   Size size;
+  List<Widget> screenList;
+
+  @override
+  void initState() {
+    super.initState();
+    screenList = [
+      ProfileScreen(),
+      ProfileScreen(),
+      ProfileScreen(),
+      ProfileScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +32,6 @@ class _BodyOperationsState extends State<BodyOperations> {
       child: CustomScrollView(
         physics: NeverScrollableScrollPhysics(),
         slivers: [
-          SliverAppBar(
-            title: Text("Silver AppBar"),
-          ),
           SliverAnimatedSwitcher(
             duration: Duration(microseconds: 300),
             child: SliverToBoxAdapter(
@@ -40,27 +50,12 @@ class _BodyOperationsState extends State<BodyOperations> {
                         bottomNavModel.setIndexBySlider(index);
                       },
                     ),
-                    items: [1, 2, 3, 4].map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
-                              decoration: BoxDecoration(color: Colors.amber[50]),
-                              child: Center(
-                                child: Text(
-                                  'text $i',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ));
-                        },
-                      );
-                    }).toList(),
+                    items: screenList,
                   );
                 },
               ),
             ),
-          )
+          ),
         ],
       ),
     );

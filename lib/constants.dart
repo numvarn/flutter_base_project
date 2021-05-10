@@ -6,22 +6,41 @@ const kPrimaryColor = Color(0xFF6F35A5);
 const kPrimaryLightColor = Color(0xFFF1E6FF);
 const kSecoundaryColor = Color(0xFF6F35A5);
 
+// Colors Text.
 const kTextPrimaryColor = Color(0xFF6F35A5);
+const kTextSecondaryColor = Colors.black54;
 
 // * AppBar Text Style
-TextStyle appBarStyle = GoogleFonts.kanit(
+final TextStyle appBarStyle = GoogleFonts.kanit(
   fontSize: 18,
   color: kTextPrimaryColor,
 );
 
 // * Bottom Bar Text Style
-TextStyle bottomTextStyle = TextStyle(
+final TextStyle bottomTextStyle = TextStyle(
   color: kPrimaryColor,
   fontSize: 16,
 );
 
+// * Content Bullet
+final TextStyle contentBulletStyle = GoogleFonts.kanit(
+  fontSize: 22,
+  color: kTextPrimaryColor,
+);
+
+// * Content Sub Bullet
+final TextStyle contentSubBulletStyle = GoogleFonts.kanit(
+  fontSize: 18,
+  color: kTextPrimaryColor,
+);
+
+// * Content Sub Bullet
+final TextStyle contentTextStyle = GoogleFonts.kanit(
+  fontSize: 16,
+);
+
 // * Setup TextTheme of this application
-TextTheme baseFont = GoogleFonts.kanitTextTheme();
+final TextTheme baseFont = GoogleFonts.kanitTextTheme();
 
 // * TextButton Style
 final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
