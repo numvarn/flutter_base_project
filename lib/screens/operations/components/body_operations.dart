@@ -1,4 +1,5 @@
 import 'package:base_project/models/bottom_nav_model.dart';
+import 'package:base_project/screens/home/home_screen.dart';
 import 'package:base_project/screens/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _BodyOperationsState extends State<BodyOperations> {
   void initState() {
     super.initState();
     screenList = [
-      ProfileScreen(),
+      HomeScreen(),
       ProfileScreen(),
       ProfileScreen(),
       ProfileScreen(),

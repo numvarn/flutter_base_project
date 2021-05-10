@@ -39,6 +39,22 @@ final TextStyle contentTextStyle = GoogleFonts.kanit(
   fontSize: 16,
 );
 
+// * Header Text Style
+final TextStyle header1Style = GoogleFonts.kanit(
+  fontSize: 24,
+  color: kTextPrimaryColor,
+);
+
+final TextStyle subHeaderStyle = GoogleFonts.kanit(
+  fontSize: 18,
+  color: Colors.black54,
+);
+
+final TextStyle header2Style = GoogleFonts.kanit(
+  fontSize: 16,
+  color: kTextPrimaryColor,
+);
+
 // * Setup TextTheme of this application
 final TextTheme baseFont = GoogleFonts.kanitTextTheme();
 
