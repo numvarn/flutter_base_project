@@ -9,7 +9,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -188,9 +187,6 @@ class ProfileScreen extends StatelessWidget {
                     alignment: Alignment(-1, 0),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * .4,
-                )
               ],
             ),
           ),

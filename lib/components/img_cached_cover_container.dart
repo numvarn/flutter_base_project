@@ -2,16 +2,12 @@ import 'package:base_project/constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class CachedImageContainer extends StatelessWidget {
+class CachedImageCoverContainer extends StatelessWidget {
   final String imgUrl;
-  final int height;
-  final int width;
 
-  const CachedImageContainer({
+  const CachedImageCoverContainer({
     Key key,
-    @required this.imgUrl,
-    @required this.height,
-    this.width,
+    this.imgUrl,
   }) : super(key: key);
 
   @override
@@ -23,12 +19,7 @@ class CachedImageContainer extends StatelessWidget {
       imageUrl: imgUrl,
       imageBuilder: (context, imageProvider) {
         return Container(
-          height: this.height.toDouble(),
-          width: this.width != null ? this.width.toDouble() : this.height.toDouble(),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(18.0),
-            ),
             image: DecorationImage(
               image: imageProvider,
               fit: BoxFit.cover,
