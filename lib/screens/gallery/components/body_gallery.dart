@@ -1,13 +1,8 @@
 import 'package:base_project/components/img_cached_cover_container.dart';
 import 'package:flutter/material.dart';
 
-class GalleryBody extends StatefulWidget {
-  @override
-  _GalleryBodyState createState() => _GalleryBodyState();
-}
-
-class _GalleryBodyState extends State<GalleryBody> {
-  List<String> imgsList = [
+class GalleryBody extends StatelessWidget {
+  final List<String> imgsList = [
     'https://numvarn.github.io/resume/asset/network_photos/cristina-gottardi-wndpWTiDuT0-unsplash.jpg',
     'https://numvarn.github.io/resume/asset/network_photos/david-marcu-78A265wPiO4-unsplash.jpg',
     'https://numvarn.github.io/resume/asset/network_photos/dino-reichmuth-kk3W5-0b6e0-unsplash.jpg',
