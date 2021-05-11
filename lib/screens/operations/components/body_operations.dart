@@ -4,6 +4,7 @@ import 'package:base_project/constants.dart';
 import 'package:base_project/models/bottom_nav_model.dart';
 import 'package:base_project/screens/gallery/gallery_screen.dart';
 import 'package:base_project/screens/home/home_widget.dart';
+import 'package:base_project/screens/profile/profile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class BodyOperations extends StatefulWidget {
 
 class _BodyOperationsState extends State<BodyOperations> {
   Size size;
+  final PageController controller = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -71,8 +73,7 @@ class _BodyOperationsState extends State<BodyOperations> {
               */
               galleryScreen(context),
               Text("3"),
-              Text("4"),
-              Text("5"),
+              ProfileScreen(),
             ],
           );
         }),

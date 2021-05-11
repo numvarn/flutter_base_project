@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SignupValidation()),
-        ChangeNotifierProvider(create: (_) => BottomNavModel()),
+        ChangeNotifierProvider<SignupValidation>(create: (_) => SignupValidation()),
+        ChangeNotifierProvider<BottomNavModel>(create: (_) => BottomNavModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
