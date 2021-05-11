@@ -1,8 +1,9 @@
+// ignore: unused_import
+import 'package:base_project/components/img_cached_cover_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/models/bottom_nav_model.dart';
 import 'package:base_project/screens/gallery/gallery_screen.dart';
-import 'package:base_project/screens/home/home_screen.dart';
-import 'package:base_project/screens/profile/profile.dart';
+import 'package:base_project/screens/home/home_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +16,10 @@ class BodyOperations extends StatefulWidget {
 
 class _BodyOperationsState extends State<BodyOperations> {
   Size size;
-  List<Widget> screenList;
 
   @override
   void initState() {
     super.initState();
-    screenList = [
-      HomeScreen(),
-      GalleryScreen(),
-      ProfileScreen(),
-      ProfileScreen(),
-    ];
   }
 
   @override
@@ -55,27 +49,33 @@ class _BodyOperationsState extends State<BodyOperations> {
             ),
           ),
         ),
-        Container(
-          child: Consumer<BottomNavModel>(
-            builder: (context, bottomNavModel, child) {
-              return CarouselSlider(
-                carouselController: bottomNavModel.getCarouselController,
-                options: CarouselOptions(
-                  height: size.height,
-                  viewportFraction: 1.0,
-                  initialPage: bottomNavModel.getSelectedIndex,
-                  enableInfiniteScroll: true,
-                  autoPlay: false,
-                  enlargeCenterPage: true,
-                  onPageChanged: (index, reason) {
-                    bottomNavModel.setIndexBySlider(index);
-                  },
-                ),
-                items: screenList,
-              );
-            },
-          ),
-        )
+        Consumer<BottomNavModel>(builder: (context, bottomNavModel, child) {
+          return CarouselSlider(
+            carouselController: bottomNavModel.getCarouselController,
+            options: CarouselOptions(
+              viewportFraction: 1.0,
+              initialPage: 0,
+              height: size.height,
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                bottomNavModel.setIndexBySlider(index);
+              },
+            ),
+            items: [
+              /*
+              * Page Number #1
+              */
+              homeScreen(context),
+              /*
+              * Page Number #2
+              */
+              galleryScreen(context),
+              Text("3"),
+              Text("4"),
+              Text("5"),
+            ],
+          );
+        }),
       ],
     );
   }
