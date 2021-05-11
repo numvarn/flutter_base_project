@@ -28,17 +28,6 @@ class _BodyHomeScreenState extends State<BodyHomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Hey Customers,",
-              style: header1Style,
-            ),
-            Text(
-              "Find the course you want to learn.",
-              style: subHeaderStyle,
-            ),
-            SizedBox(
-              height: 15,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

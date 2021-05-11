@@ -41,12 +41,12 @@ final TextStyle contentTextStyle = GoogleFonts.kanit(
 
 // * Header Text Style
 final TextStyle header1Style = GoogleFonts.kanit(
-  fontSize: 24,
+  fontSize: 20,
   color: kTextPrimaryColor,
 );
 
 final TextStyle subHeaderStyle = GoogleFonts.kanit(
-  fontSize: 18,
+  fontSize: 16,
   color: Colors.black54,
 );
 

@@ -13,10 +13,17 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            // height: MediaQuery.of(context).size.height + 30,
             padding: EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(200.0),
+                  child: CachedImageContainer(
+                    imgUrl: 'https://numvarn.github.io/resume/images/phisan.jpg',
+                    height: 160,
+                  ),
+                ),
+                SizedBox(height: sizeBox),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Center(
@@ -24,14 +31,6 @@ class ProfileScreen extends StatelessWidget {
                       "นายพิศาล สุขขี",
                       style: contentBulletStyle,
                     ),
-                  ),
-                ),
-                SizedBox(height: sizeBox),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(200.0),
-                  child: CachedImageContainer(
-                    imgUrl: 'https://numvarn.github.io/resume/images/phisan.jpg',
-                    height: 160,
                   ),
                 ),
                 SizedBox(height: sizeBox),
@@ -187,6 +186,7 @@ class ProfileScreen extends StatelessWidget {
                     alignment: Alignment(-1, 0),
                   ),
                 ),
+                SizedBox(height: 300),
               ],
             ),
           ),
