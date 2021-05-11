@@ -40,8 +40,9 @@ class BottomNavBar extends StatelessWidget {
                     textStyle: bottomTextStyle,
                   ),
                   GButton(
-                    icon: LineIcons.heart,
-                    text: 'Likes',
+                    // icon: LineIcons.imageFile,
+                    icon: Icons.image_outlined,
+                    text: 'Gallery',
                     textStyle: bottomTextStyle,
                   ),
                   GButton(
