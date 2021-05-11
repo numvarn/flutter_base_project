@@ -67,12 +67,18 @@ class _BodyOperationsState extends State<BodyOperations> {
               /*
               * Page Number #1
               */
-              homeScreen(context),
+              HomeScreen(),
               /*
               * Page Number #2
               */
-              galleryScreen(context),
+              GalleryScreen(),
+              /*
+              * Page Number #3
+              */
               Text("3"),
+              /*
+              * Page Number #4
+              */
               ProfileScreen(),
             ],
           );
