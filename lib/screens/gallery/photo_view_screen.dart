@@ -50,7 +50,9 @@ class PhotoviewScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: PhotoViewBody(photoIndex: this.photoIndex),
+      body: SingleChildScrollView(
+        child: PhotoViewBody(photoIndex: this.photoIndex),
+      ),
     );
   }
 }

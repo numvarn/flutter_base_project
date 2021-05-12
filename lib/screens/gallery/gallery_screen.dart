@@ -71,7 +71,6 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
               }),
             ),
           ),
-          Container(),
         ],
       ),
     );

@@ -4,10 +4,14 @@ import 'package:flutter/material.dart';
 
 class CachedImageGalleryContainer extends StatelessWidget {
   final String imgUrl;
+  final double height;
+  final double width;
 
   const CachedImageGalleryContainer({
     Key key,
     this.imgUrl,
+    this.height = double.infinity,
+    this.width = double.infinity,
   }) : super(key: key);
 
   @override
@@ -19,6 +23,8 @@ class CachedImageGalleryContainer extends StatelessWidget {
       imageUrl: imgUrl,
       imageBuilder: (context, imageProvider) {
         return Container(
+          width: this.width,
+          height: this.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: imageProvider,

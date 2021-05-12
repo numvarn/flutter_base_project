@@ -1,5 +1,4 @@
 // ignore: unused_import
-import 'package:base_project/components/img_cached_cover_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/models/bottom_nav_model.dart';
 import 'package:base_project/screens/gallery/gallery_screen.dart';

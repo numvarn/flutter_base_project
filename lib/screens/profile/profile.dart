@@ -1,4 +1,4 @@
-import 'package:base_project/components/img_cached_container.dart';
+import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +18,10 @@ class ProfileScreen extends StatelessWidget {
               children: <Widget>[
                 ClipRRect(
                   borderRadius: BorderRadius.circular(200.0),
-                  child: CachedImageContainer(
+                  child: CachedImageGalleryContainer(
                     imgUrl: 'https://numvarn.github.io/resume/images/phisan.jpg',
                     height: 160,
+                    width: 160,
                   ),
                 ),
                 SizedBox(height: sizeBox),

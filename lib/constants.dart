@@ -55,6 +55,10 @@ final TextStyle header2Style = GoogleFonts.kanit(
   color: kTextPrimaryColor,
 );
 
+final TextStyle descTextStyle = GoogleFonts.kanit(
+  color: kTextSecondaryColor,
+);
+
 // * Setup TextTheme of this application
 final TextTheme baseFont = GoogleFonts.kanitTextTheme();
 

@@ -1,4 +1,4 @@
-import 'package:base_project/components/img_cached_cover_container.dart';
+import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/data/image_network.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                       Card(
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: CachedImageCoverContainer(
+                        child: CachedImageGalleryContainer(
                           imgUrl: imgsList[index],
                         ),
                         shape: RoundedRectangleBorder(
