@@ -1,6 +1,7 @@
 import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/data/image_network.dart';
+import 'package:base_project/screens/gallery/photo_view_screen.dart';
 import 'package:flutter/material.dart';
 
 class GalleryScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
               ),
               TextButton(
                 child: Text(
-                  "See All",
+                  "Upload",
                   style: header2Style,
                 ),
                 onPressed: () {},
@@ -45,16 +46,27 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
               shrinkWrap: true,
               padding: const EdgeInsets.all(0.0),
               children: List.generate(galleryList.length, (index) {
-                return Card(
-                  semanticContainer: true,
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                return InkWell(
+                  child: Card(
+                    semanticContainer: true,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    elevation: 1,
+                    child: CachedImageGalleryContainer(
+                      imgUrl: "${galleryList[index]}",
+                    ),
                   ),
-                  elevation: 1,
-                  child: CachedImageGalleryContainer(
-                    imgUrl: "${galleryList[index]}",
-                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PhotoviewScreen(
+                                photoIndex: index,
+                              )),
+                    );
+                  },
                 );
               }),
             ),

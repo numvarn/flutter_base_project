@@ -7,7 +7,7 @@ final List<String> imgsList = [
   'https://jooinn.com/images/beautiful-landscape-13.jpg'
 ];
 
-final List<String> galleryList = [
+const List<String> galleryList = [
   'https://numvarn.github.io/resume/asset/network_photos/cristina-gottardi-wndpWTiDuT0-unsplash.jpg',
   'https://numvarn.github.io/resume/asset/network_photos/david-marcu-78A265wPiO4-unsplash.jpg',
   'https://numvarn.github.io/resume/asset/network_photos/dino-reichmuth-kk3W5-0b6e0-unsplash.jpg',
