@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 
   @override
   Widget build(BuildContext context) {
+    print("build home screen");
     Size size = MediaQuery.of(context).size;
     return Container(
       width: size.width,

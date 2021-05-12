@@ -17,6 +17,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
+    print("build gallery page");
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
       child: Column(

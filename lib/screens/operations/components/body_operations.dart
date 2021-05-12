@@ -2,8 +2,8 @@
 import 'package:base_project/constants.dart';
 import 'package:base_project/models/bottom_nav_model.dart';
 import 'package:base_project/screens/gallery/gallery_screen.dart';
-import 'package:base_project/screens/home/home_widget.dart';
-import 'package:base_project/screens/profile/profile.dart';
+import 'package:base_project/screens/home/home_screen.dart';
+import 'package:base_project/screens/profile/profile_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,7 @@ class _BodyOperationsState extends State<BodyOperations> {
 
   @override
   Widget build(BuildContext context) {
+    print("build operation screen");
     size = MediaQuery.of(context).size;
     return Column(
       children: [
