@@ -4,8 +4,7 @@ import 'package:base_project/screens/gallery/components/body_photo_view.dart';
 import 'package:flutter/material.dart';
 
 class PhotoviewScreen extends StatelessWidget {
-  final int photoIndex;
-  const PhotoviewScreen({Key key, @required this.photoIndex}) : super(key: key);
+  const PhotoviewScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class PhotoviewScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        child: PhotoViewBody(photoIndex: this.photoIndex),
+        child: PhotoViewBody(),
       ),
     );
   }

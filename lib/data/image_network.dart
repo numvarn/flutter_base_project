@@ -30,3 +30,7 @@ const List<String> galleryList = [
   // 'https://numvarn.github.io/resume/asset/network_photos/vincent-guth-62V7ntlKgL8-unsplash.jpg',
   // 'https://numvarn.github.io/resume/asset/network_photos/wil-stewart-pHANr-CpbYM-unsplash.jpg',
 ];
+
+const List<String> personsImgList = [
+  'https://numvarn.github.io/resume/images/phisan.jpg',
+];
