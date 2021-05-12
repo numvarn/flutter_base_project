@@ -14,16 +14,14 @@ class PhotoViewBody extends StatefulWidget {
 
 class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveClientMixin<PhotoViewBody> {
   Size size;
+  List<String> filename = [];
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    print("rebuild");
     size = MediaQuery.of(context).size;
-
-    // List<String> filename = imgUrl.split(".");
 
     // Get date time now
     final DateTime now = DateTime.now();
@@ -33,6 +31,7 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
     return Container(
       child: Consumer<PhotosModel>(
         builder: (context, photosModel, child) {
+          filename = photosModel.imgUrl.split(".");
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,9 +149,9 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
                       'ประเภท',
                       style: descTextStyle,
                     ),
-                    // Text(
-                    //   '${filename[filename.length - 1].toUpperCase()}',
-                    // ),
+                    Text(
+                      '${filename[filename.length - 1].toUpperCase()}',
+                    ),
                   ],
                 ),
               ),
