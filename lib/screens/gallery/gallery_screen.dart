@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GalleryScreen extends StatefulWidget {
+  const GalleryScreen({Key key}) : super(key: key);
   @override
   _GalleryScreenState createState() => _GalleryScreenState();
 }

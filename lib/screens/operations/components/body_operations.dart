@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BodyOperations extends StatefulWidget {
+  const BodyOperations({Key key}) : super(key: key);
+
   @override
   _BodyOperationsState createState() => _BodyOperationsState();
 }
@@ -67,11 +69,11 @@ class _BodyOperationsState extends State<BodyOperations> {
               /*
               * Page Number #1
               */
-              HomeScreen(),
+              const HomeScreen(),
               /*
               * Page Number #2
               */
-              GalleryScreen(),
+              const GalleryScreen(),
               /*
               * Page Number #3
               */
@@ -79,7 +81,7 @@ class _BodyOperationsState extends State<BodyOperations> {
               /*
               * Page Number #4
               */
-              ProfileScreen(),
+              const ProfileScreen(),
             ],
           );
         }),
