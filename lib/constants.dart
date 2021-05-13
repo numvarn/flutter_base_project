@@ -73,3 +73,14 @@ final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
     borderRadius: BorderRadius.all(Radius.circular(2)),
   ),
 );
+
+final ButtonStyle outlineMainButtonStyle = OutlinedButton.styleFrom(
+  primary: kPrimaryColor,
+  backgroundColor: kPrimaryColor,
+  side: BorderSide(color: kPrimaryColor, width: 1),
+  minimumSize: Size(88, 36),
+  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(2)),
+  ),
+);
