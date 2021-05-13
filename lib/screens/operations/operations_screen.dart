@@ -31,9 +31,7 @@ class OperationScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: BodyOperations(),
-      ),
+      body: BodyOperations(),
       drawer: DrawerNavigator(),
       bottomNavigationBar: BottomNavBar(),
     );

@@ -29,64 +29,76 @@ class _BodyOperationsState extends State<BodyOperations> {
   Widget build(BuildContext context) {
     print("build operation screen");
     size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        Container(
-          width: size.width,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hey Customers,",
-                  style: header1Style,
-                ),
-                Text(
-                  "Find the course you want to learn.",
-                  style: subHeaderStyle,
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-              ],
+
+    return Container(
+      child: CustomScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        slivers: [
+          SliverAppBar(
+            backgroundColor: Color(0xFFFFFFFF),
+            automaticallyImplyLeading: false,
+            pinned: true,
+            title: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hey Customers,",
+                        style: header1Style,
+                      ),
+                      Text(
+                        "Find the course you want to learn.",
+                        style: subHeaderStyle,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Consumer<BottomNavModel>(builder: (context, bottomNavModel, child) {
-          return CarouselSlider(
-            carouselController: bottomNavModel.getCarouselController,
-            options: CarouselOptions(
-              viewportFraction: 1.0,
-              initialPage: 0,
-              height: size.height,
-              enlargeCenterPage: true,
-              onPageChanged: (index, reason) {
-                bottomNavModel.setIndexBySlider(index);
-              },
-            ),
-            items: [
-              /*
-              * Page Number #1
-              */
-              const HomeScreen(),
-              /*
-              * Page Number #2
-              */
-              const GalleryScreen(),
-              /*
-              * Page Number #3
-              */
-              const Text("3"),
-              /*
-              * Page Number #4
-              * send build context to stateless widget
-              */
-              const PersonProfileScreen().build(context),
-            ],
-          );
-        }),
-      ],
+          SliverToBoxAdapter(
+            child: Consumer<BottomNavModel>(builder: (context, bottomNavModel, child) {
+              return CarouselSlider(
+                carouselController: bottomNavModel.getCarouselController,
+                options: CarouselOptions(
+                  viewportFraction: 1.0,
+                  initialPage: 0,
+                  height: size.height,
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, reason) {
+                    bottomNavModel.setIndexBySlider(index);
+                  },
+                ),
+                items: [
+                  /*
+                * Page Number #1
+                */
+                  const HomeScreen(),
+                  /*
+                * Page Number #2
+                */
+                  const GalleryScreen(),
+                  /*
+                * Page Number #3
+                */
+                  const Text("3"),
+                  /*
+                * Page Number #4
+                */
+                  const PersonProfileScreen(),
+                ],
+              );
+            }),
+          )
+        ],
+      ),
     );
   }
 }

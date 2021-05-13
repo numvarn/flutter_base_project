@@ -50,7 +50,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             SizedBox(
               height: 10,
             ),
-            Expanded(
+            Flexible(
+              fit: FlexFit.tight,
               child: StaggeredGridView.countBuilder(
                 crossAxisCount: 4,
                 itemCount: imgsList.length,
@@ -85,6 +86,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 mainAxisSpacing: 6.0,
                 crossAxisSpacing: 6.0,
               ),
+            ),
+            SizedBox(
+              height: 300,
             ),
           ],
         ),
