@@ -34,3 +34,13 @@ const List<String> galleryList = [
 const List<String> personsImgList = [
   'https://numvarn.github.io/resume/images/phisan.jpg',
 ];
+
+/*
+ * Uploaded photo structure
+ */
+const List<Map<String, dynamic>> uploadedImage = [
+  {
+    'id': 540,
+    'image': 'https://numvarn.github.io/resume/asset/network_photos/cristina-gottardi-wndpWTiDuT0-unsplash.jpg',
+  },
+];

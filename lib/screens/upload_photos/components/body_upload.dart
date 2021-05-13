@@ -1,5 +1,7 @@
+import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/components/select_photo_container.dart';
+import 'package:base_project/data/image_network.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:base_project/constants.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +13,35 @@ class BodyUploadPhotos extends StatefulWidget {
 
 class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   /*
-  * Multiple select photo arg.
+  * Multiple select photo argument.
   */
   final int maxImageLimit = 3;
   bool isSelectedImage = false;
 
-  // List image for preview only, dynamic type.
+  /*
+  * List image for preview only, dynamic type.
+  */
   List<dynamic> listImageForPreview = [];
 
-  // List image for upload only, asset type only.
+  /*
+  * List image for upload only, asset type only.
+  */
   List<Asset> listImagesForUpload = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    /*
+    * Add uploaded image to preview list
+    * Add init image for preview only from product image.
+    */
+    if (uploadedImage.length != 0) {
+      uploadedImage.forEach((element) {
+        listImageForPreview.add(element);
+      });
+    }
+  }
 
   /*
    * For load load image from device gallery
@@ -48,7 +69,7 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     if (!mounted) return;
 
     if (listImageForPreview.length != 0) {
-      // Add image if images not fully. (3 Image).
+      // Add image if images not fully. (limited by maxImageLimit).
       if (listImageForPreview.length < maxImageLimit && (resultList.length + listImageForPreview.length) <= maxImageLimit) {
         setState(() {
           listImagesForUpload.addAll(resultList);
@@ -90,10 +111,25 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     }
   }
 
+  /*
+  * Delete uploaded photo
+  */
   void _onShowDialogConfirmRemove(int imgID) {
-    print("Hello");
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CustomConfirmDialog(
+            title: "ลบรูปภาพออกจากระบบ",
+            subtitle: "กรุณากดยืนยันเพื่อดำเนินการต่อ",
+            onpress: () {
+              setState(() {
+                listImageForPreview.removeWhere((element) => element.runtimeType != Asset && element['id'] == imgID);
+                Navigator.pop(context);
+              });
+            },
+          );
+        });
   }
-
   /*
   * --------------------------
   */
@@ -233,7 +269,21 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
                   ),
                   TextButton(
                     style: outlineButtonWideStyle,
-                    onPressed: () {},
+                    onPressed: isSelectedImage && listImagesForUpload.length != 0
+                        ? () => showDialog(
+                            context: context,
+                            builder: (context) {
+                              return CustomConfirmDialog(
+                                title: "ดำเนินการอัปโหลด",
+                                subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
+                                onpress: () {
+                                  print("Uploading");
+                                  // _uploadProcess(listImageForUpload);
+                                  Navigator.pop(context);
+                                },
+                              );
+                            })
+                        : null,
                     child: Text("อัปโหลด"),
                   ),
                 ],
@@ -265,4 +315,65 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
       ),
     );
   }
+
+  /*
+   * Upload Image process 
+   */
+  /*
+  // For upload data by using MultipathRequest
+  Future<Null> _uploadProcess({@required List<Asset> listImageForUpload, @required int productId}) async {
+    // get current user token
+    String token = settingModel.value['token'];
+
+    // string to uri
+    Uri uri = Uri.parse('${settingModel.baseURL}/${settingModel.endPointUploadProductImage}');
+
+    // create multipart request
+    MultipartRequest request = MultipartRequest("POST", uri);
+
+    for (Asset asset in listImageForUpload) {
+      ByteData byteData = await asset.getByteData(quality: 30);
+      List<int> imageData = byteData.buffer.asUint8List();
+
+      MultipartFile multipartFile = MultipartFile.fromBytes(
+        'image',
+        imageData,
+        filename: 'image.jpg',
+      );
+
+      // add access token to header
+      request.headers['authorization'] = "Token $token";
+
+      // add file to multipart
+      request.files.add(multipartFile);
+    }
+
+    //adding params Product ID
+    request.fields['product'] = "$productId";
+
+    // Upload photo and wait for response
+    try {
+      pr.show();
+      Response response = await Response.fromStream(await request.send());
+      var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
+
+      if (jsonData['status']) {
+        pr.hide();
+        productImageModel.addImage(listImage: jsonData['data']);
+        showFlashBar(context, message: 'อัพโหลดรูปภาพสำเร็จ', success: true);
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ViewProductScreen(productId: productId),
+          ),
+        );
+      }
+    } catch (e) {
+      showFlashBar(context, message: 'เกิดข้อผิดพลาดบางอย่าง', error: true);
+      pr.hide();
+      print(e.toString());
+    }
+  }
+  */
 }
