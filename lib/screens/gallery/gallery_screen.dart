@@ -4,6 +4,7 @@ import 'package:base_project/data/image_network.dart';
 import 'package:base_project/models/photos_model.dart';
 import 'package:base_project/screens/gallery/photo_view_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class GalleryScreen extends StatefulWidget {
@@ -44,17 +45,17 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
             SizedBox(
               height: 10,
             ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Consumer<PhotosModel>(
-                builder: (context, photosModel, child) {
-                  return GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 1.0,
+            Consumer<PhotosModel>(
+              builder: (context, photosModel, child) {
+                return Flexible(
+                  fit: FlexFit.tight,
+                  child: StaggeredGridView.countBuilder(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 6.0,
                     crossAxisSpacing: 6.0,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(0.0),
-                    children: List.generate(galleryList.length, (index) {
+                    itemCount: galleryList.length,
+                    staggeredTileBuilder: (int index) => new StaggeredTile.count(2, index.isEven ? 2 : 2),
+                    itemBuilder: (BuildContext context, index) {
                       return InkWell(
                         child: Card(
                           semanticContainer: true,
@@ -62,7 +63,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          elevation: 1,
+                          elevation: 2,
                           child: CachedImageGalleryContainer(
                             imgUrl: "${galleryList[index]}",
                           ),
@@ -75,14 +76,11 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                           );
                         },
                       );
-                    }),
-                  );
-                },
-              ),
+                    },
+                  ),
+                );
+              },
             ),
-            // SizedBox(
-            //   height: 300,
-            // ),
           ],
         ),
       ),

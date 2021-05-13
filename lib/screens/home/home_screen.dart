@@ -87,9 +87,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                 crossAxisSpacing: 6.0,
               ),
             ),
-            SizedBox(
-              height: 300,
-            ),
           ],
         ),
       ),
