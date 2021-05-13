@@ -77,11 +77,12 @@ class _BodyOperationsState extends State<BodyOperations> {
               /*
               * Page Number #3
               */
-              Text("3"),
+              const Text("3"),
               /*
               * Page Number #4
+              * send build context to stateless widget
               */
-              const ProfileScreen(),
+              const PersonProfileScreen().build(context),
             ],
           );
         }),

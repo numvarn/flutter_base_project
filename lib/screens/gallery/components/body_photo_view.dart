@@ -21,6 +21,8 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     size = MediaQuery.of(context).size;
 
     // Get date time now
