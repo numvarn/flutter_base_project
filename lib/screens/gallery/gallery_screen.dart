@@ -19,8 +19,11 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     print("build gallery page");
+
+    super.build(context);
+    Size size = MediaQuery.of(context).size;
+
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 0),
@@ -50,6 +53,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                 return Flexible(
                   fit: FlexFit.tight,
                   child: StaggeredGridView.countBuilder(
+                    padding: EdgeInsets.only(bottom: size.height * .4),
                     crossAxisCount: 4,
                     mainAxisSpacing: 6.0,
                     crossAxisSpacing: 6.0,

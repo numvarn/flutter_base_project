@@ -53,8 +53,10 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             Flexible(
               fit: FlexFit.tight,
               child: StaggeredGridView.countBuilder(
+                shrinkWrap: true,
                 crossAxisCount: 4,
                 itemCount: imgsList.length,
+                padding: EdgeInsets.only(bottom: size.height * .4),
                 itemBuilder: (BuildContext context, int index) {
                   return Stack(
                     children: [
