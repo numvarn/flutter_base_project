@@ -2,6 +2,7 @@ import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/gallery/components/body_photo_view.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class PhotoviewScreen extends StatelessWidget {
   const PhotoviewScreen({Key key}) : super(key: key);
@@ -27,7 +28,9 @@ class PhotoviewScreen extends StatelessWidget {
             icon: Icon(
               Icons.share_outlined,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _onShareWithEmptyOrigin(context);
+            },
           ),
           IconButton(
             icon: Icon(
@@ -53,5 +56,9 @@ class PhotoviewScreen extends StatelessWidget {
         child: PhotoViewBody(),
       ),
     );
+  }
+
+  void _onShareWithEmptyOrigin(BuildContext context) async {
+    await Share.share("ทุเรียนลาวา ศรีสะเกษ\nhttps://www.lavadurian.com/shopping/product/195");
   }
 }

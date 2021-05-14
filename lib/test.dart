@@ -53,6 +53,6 @@ class DemoAppState extends State<DemoApp> {
   }
 
   _onShareWithEmptyOrigin(BuildContext context) async {
-    await Share.share("https://www.lavadurian.com/shopping/product/195");
+    await Share.share("ทุเรียนลาวา ศรีสะเกษ https://www.lavadurian.com/shopping/product/195");
   }
 }
