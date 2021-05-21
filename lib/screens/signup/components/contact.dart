@@ -99,6 +99,19 @@ class ContactFormState extends State<ContactForm> {
   }
 
   void _onSubmitData() {
+    Map<String, dynamic> data = {
+      'email': validationService.email.value,
+      'password': validationService.password.value,
+      'gender': validationService.gender,
+      'firstname': validationService.firstname.value,
+      'lastname': validationService.lastname.value,
+      'dob': validationService.dob.value,
+      'phone': validationService.phone.value,
+      'address': validationService.address.value,
+    };
+
+    print(data);
+
     showDialog(
       context: context,
       builder: (context) {

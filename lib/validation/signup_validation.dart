@@ -24,10 +24,14 @@ class SignupValidation with ChangeNotifier {
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _address = ValidationItem(null, null);
 
+  String _gender = '';
+
   // * Getters
   ValidationItem get email => _email;
   ValidationItem get password => _password;
   ValidationItem get passwordConfirm => _passwordConfirm;
+
+  get gender => _gender;
 
   ValidationItem get firstname => _firstname;
   ValidationItem get lastname => _lastname;
@@ -42,6 +46,10 @@ class SignupValidation with ChangeNotifier {
   get getSelectedIndex => _selectedIndex;
   get getCarouselController => buttonCarouselController;
   get getPageController => pageController;
+
+  void setGender(String gender) {
+    _gender = gender;
+  }
 
   void setIndex(int index) {
     _selectedIndex = index;

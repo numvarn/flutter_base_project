@@ -14,6 +14,7 @@ class ProfileForm extends StatefulWidget {
 class ProfileFormState extends State<ProfileForm> {
   SignupValidation validationService;
 
+  // controller
   static TextEditingController nameController = TextEditingController();
   static TextEditingController lastnameController = TextEditingController();
   static TextEditingController genderController = TextEditingController();
@@ -27,6 +28,9 @@ class ProfileFormState extends State<ProfileForm> {
   Widget build(BuildContext context) {
     // * Sign-up validation services
     validationService = Provider.of<SignupValidation>(context);
+
+    // * Set defaul gender
+    validationService.setGender(genderValue);
 
     size = MediaQuery.of(context).size;
 
@@ -60,8 +64,8 @@ class ProfileFormState extends State<ProfileForm> {
             RoundedInputField(
               hintText: "วัน-เดือน-ปีเกิด",
               errorText: validationService.dob.error,
-              controller: dobController,
               icon: Icons.calendar_today_outlined,
+              controller: dobController,
               onChanged: (dob) {
                 validationService.validateDOB(dob);
               },
@@ -133,7 +137,9 @@ class ProfileFormState extends State<ProfileForm> {
       modalHeaderStyle: S2ModalHeaderStyle(
         centerTitle: false,
       ),
-      onChange: (state) => setState(() => genderController.text = state.value),
+      onChange: (state) {
+        validationService.setGender(state.value);
+      },
     );
   }
 

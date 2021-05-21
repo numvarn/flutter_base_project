@@ -16,7 +16,6 @@ class AccountFormState extends State<AccountForm> {
   static TextEditingController controllerEmail = TextEditingController();
   static TextEditingController controllerPassword = TextEditingController();
   static TextEditingController controllerPasswordComfirm = TextEditingController();
-
   SignupValidation validationService;
 
   @override
