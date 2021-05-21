@@ -75,7 +75,7 @@ class _BodyStepperState extends State<BodyStepper> {
                       controller: pageController,
                       count: 3,
                       effect: ExpandingDotsEffect(
-                        dotColor: kPrimaryLightColor.withOpacity(0.5),
+                        dotColor: Colors.grey.withOpacity(0.3),
                         activeDotColor: kPrimaryLightColor,
                         expansionFactor: 2,
                       ),
