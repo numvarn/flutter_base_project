@@ -10,6 +10,12 @@ const kSecoundaryColor = Color(0xFF6F35A5);
 const kTextPrimaryColor = Color(0xFF6F35A5);
 const kTextSecondaryColor = Colors.black54;
 
+// * Setup TextTheme of this application
+final TextTheme baseFont = GoogleFonts.kanitTextTheme();
+
+// * Set App font family
+final fontFamily = GoogleFonts.kanit(fontWeight: FontWeight.w400).fontFamily;
+
 // * AppBar Text Style
 final TextStyle appBarStyle = GoogleFonts.kanit(
   fontSize: 18,
@@ -58,9 +64,6 @@ final TextStyle header2Style = GoogleFonts.kanit(
 final TextStyle descTextStyle = GoogleFonts.kanit(
   color: kTextSecondaryColor,
 );
-
-// * Setup TextTheme of this application
-final TextTheme baseFont = GoogleFonts.kanitTextTheme();
 
 // * TextButton Style
 final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(

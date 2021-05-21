@@ -34,6 +34,7 @@ class _BodyStepperState extends State<BodyStepper> {
     return SingleChildScrollView(
       child: Background(
         child: Stepper(
+          physics: NeverScrollableScrollPhysics(),
           type: StepperType.vertical,
           currentStep: _index,
           controlsBuilder: _createEventControlBuilder,

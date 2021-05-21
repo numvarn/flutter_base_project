@@ -21,9 +21,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Base Project',
         theme: ThemeData(
-          primaryColor: kPrimaryColor,
           scaffoldBackgroundColor: Colors.white,
+          primaryColor: kPrimaryColor,
           textTheme: baseFont,
+          fontFamily: fontFamily,
         ),
         home: WelcomeScreen(),
       ),

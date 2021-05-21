@@ -32,6 +32,7 @@ class ContactFormState extends State<ContactForm> {
               errorText: validationService.phone.error,
               icon: Icons.phone_outlined,
               controller: mobileController,
+              keyboardType: TextInputType.number,
               inputFormatters: [maskPhoneFormatter],
               onChanged: (value) {
                 validationService.validatePhone(value);

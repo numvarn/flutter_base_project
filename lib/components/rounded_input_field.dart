@@ -9,6 +9,7 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final int minLines;
   final int maxLines;
+  final TextInputType keyboardType;
   final List<TextInputFormatter> inputFormatters;
   final ValueChanged<String> onChanged;
   final TextEditingController controller;
@@ -20,6 +21,7 @@ class RoundedInputField extends StatelessWidget {
     this.errorText,
     this.minLines = 1,
     this.maxLines = 1,
+    this.keyboardType,
     this.inputFormatters,
     this.icon = Icons.person,
     this.onChanged,
@@ -39,6 +41,7 @@ class RoundedInputField extends StatelessWidget {
         maxLines: maxLines,
         controller: controller,
         inputFormatters: inputFormatters,
+        keyboardType: keyboardType,
         onTap: onTab,
         decoration: InputDecoration(
           icon: Icon(
