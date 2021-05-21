@@ -1,7 +1,13 @@
 import 'package:base_project/validation/validation_item.dart';
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 
 class SignupValidation with ChangeNotifier {
+  /*
+  * * Carousel Controller
+  */
+  CarouselController buttonCarouselController = CarouselController();
+
   ValidationItem _email = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
   ValidationItem _passwordConfirm = ValidationItem(null, null);
@@ -24,6 +30,29 @@ class SignupValidation with ChangeNotifier {
 
   ValidationItem get phone => _phone;
   ValidationItem get address => _address;
+
+  // * Get current carousel index
+  int _selectedIndex = 0;
+
+  get getSelectedIndex => _selectedIndex;
+  get getCarouselController => buttonCarouselController;
+
+  void setIndex(int index) {
+    _selectedIndex = index;
+    buttonCarouselController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 800),
+      curve: Curves.fastOutSlowIn,
+    );
+    notifyListeners();
+  }
+
+  // void setIndexBySlider(int index) {
+  //   _selectedIndex = index;
+  //   notifyListeners();
+  // }
+
+  // -------------------------------------
 
   // * Check Account session is valid ??
   bool accountIsValid() {

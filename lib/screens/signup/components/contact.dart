@@ -1,4 +1,7 @@
+import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/components/rounded_input_field.dart';
+import 'package:base_project/constants.dart';
+import 'package:base_project/screens/signup/components/completed_signup.dart';
 import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -12,6 +15,8 @@ class ContactForm extends StatefulWidget {
 }
 
 class ContactFormState extends State<ContactForm> {
+  SignupValidation validationService;
+
   static TextEditingController addressController = new TextEditingController();
   static TextEditingController mobileController = new TextEditingController();
 
@@ -21,9 +26,11 @@ class ContactFormState extends State<ContactForm> {
   @override
   Widget build(BuildContext context) {
     // * Sign-up validation services
-    final validationService = Provider.of<SignupValidation>(context);
+    validationService = Provider.of<SignupValidation>(context);
+    Size size = MediaQuery.of(context).size;
 
     return Container(
+      width: size.width * .8,
       child: Form(
         child: Column(
           children: [
@@ -49,9 +56,58 @@ class ContactFormState extends State<ContactForm> {
                 validationService.validateAddress(value);
               },
             ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  _validateDataForm();
+                },
+                child: Text("ลงทะเบียนผู้ใช้งานใหม่"),
+                style: outlineCurveStyle,
+              ),
+            )
           ],
         ),
       ),
+    );
+  }
+
+  void _validateDataForm() {
+    if (!validationService.accountIsValid()) {
+      validationService.setIndex(0);
+    } else if (!validationService.profileIsValid()) {
+      validationService.setIndex(1);
+    } else if (validationService.contactIsValid()) {
+      _onSubmitData();
+    }
+  }
+
+  void _onSubmitConfirm() {
+    String msg = "";
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CompletedSignUp()),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("$msg"),
+      duration: Duration(seconds: 5),
+    ));
+  }
+
+  void _onSubmitData() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return CustomConfirmDialog(
+          title: "ดำเนินการสร้างบัญชีผู้ใช้",
+          subtitle: "กดปุ่ม ยืนยัน เพื่อดำเนินการต่อ",
+          onpress: () => _onSubmitConfirm(),
+        );
+      },
     );
   }
 }

@@ -9,10 +9,7 @@ class SignUpScreen extends StatelessWidget {
       // * for transparent appbar
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text(
-          "สร้างบัญชีเพื่อเข้าใช้งาน",
-          style: appBarStyle,
-        ),
+        title: Text(""),
         // * for transparent appbar
         elevation: 0,
         backgroundColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/components/rounded_password_field.dart';
+import 'package:base_project/constants.dart';
 import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,12 +17,17 @@ class AccountFormState extends State<AccountForm> {
   static TextEditingController controllerPassword = TextEditingController();
   static TextEditingController controllerPasswordComfirm = TextEditingController();
 
+  SignupValidation validationService;
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     // * Sign-up validation services
-    final validationService = Provider.of<SignupValidation>(context);
+    validationService = Provider.of<SignupValidation>(context);
 
     return Container(
+      width: size.width * .8,
       child: Form(
         child: Column(
           children: [
@@ -52,9 +58,29 @@ class AccountFormState extends State<AccountForm> {
                 validationService.validateConfirmPassword(validationService.password.value, passwordConfirm);
               },
             ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  validateAccountForm();
+                },
+                child: Text("ต่อไป"),
+                style: outlineCurveStyle,
+              ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  // * validate form data
+  void validateAccountForm() {
+    if (validationService.accountIsValid()) {
+      validationService.setIndex(1);
+    }
   }
 }

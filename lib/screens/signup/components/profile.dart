@@ -1,4 +1,5 @@
 import 'package:base_project/components/rounded_input_field.dart';
+import 'package:base_project/constants.dart';
 import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +12,7 @@ class ProfileForm extends StatefulWidget {
 }
 
 class ProfileFormState extends State<ProfileForm> {
-  var validationService;
+  SignupValidation validationService;
 
   static TextEditingController nameController = TextEditingController();
   static TextEditingController lastnameController = TextEditingController();
@@ -30,6 +31,7 @@ class ProfileFormState extends State<ProfileForm> {
     size = MediaQuery.of(context).size;
 
     return Container(
+      width: size.width * .8,
       child: Form(
         child: Column(
           children: [
@@ -65,6 +67,19 @@ class ProfileFormState extends State<ProfileForm> {
               },
               onTab: () => _selectDateOfBirth(context),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  _validateProfileForm();
+                },
+                child: Text("ต่อไป"),
+                style: outlineCurveStyle,
+              ),
+            )
           ],
         ),
       ),
@@ -120,5 +135,11 @@ class ProfileFormState extends State<ProfileForm> {
       ),
       onChange: (state) => setState(() => genderController.text = state.value),
     );
+  }
+
+  void _validateProfileForm() {
+    if (validationService.profileIsValid()) {
+      validationService.setIndex(2);
+    }
   }
 }
