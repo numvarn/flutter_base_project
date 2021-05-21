@@ -8,6 +8,11 @@ class SignupValidation with ChangeNotifier {
   */
   CarouselController buttonCarouselController = CarouselController();
 
+  /*
+  * * Smooth Indicator Controller
+  */
+  PageController pageController = PageController(initialPage: 0);
+
   ValidationItem _email = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
   ValidationItem _passwordConfirm = ValidationItem(null, null);
@@ -36,6 +41,7 @@ class SignupValidation with ChangeNotifier {
 
   get getSelectedIndex => _selectedIndex;
   get getCarouselController => buttonCarouselController;
+  get getPageController => pageController;
 
   void setIndex(int index) {
     _selectedIndex = index;
@@ -44,13 +50,17 @@ class SignupValidation with ChangeNotifier {
       duration: Duration(milliseconds: 800),
       curve: Curves.fastOutSlowIn,
     );
+
+    pageController = PageController(initialPage: index);
+
     notifyListeners();
   }
 
-  // void setIndexBySlider(int index) {
-  //   _selectedIndex = index;
-  //   notifyListeners();
-  // }
+  void setIndexBySlider(int index) {
+    _selectedIndex = index;
+    pageController = PageController(initialPage: index);
+    notifyListeners();
+  }
 
   // -------------------------------------
 

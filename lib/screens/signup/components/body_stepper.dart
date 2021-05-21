@@ -15,8 +15,10 @@ class BodyStepper extends StatefulWidget {
 }
 
 class _BodyStepperState extends State<BodyStepper> {
+  SignupValidation validationService;
+
   CarouselController controller;
-  SmoothIndicator smoothIndicator;
+  PageController pageController;
 
   @override
   void initState() {
@@ -25,8 +27,11 @@ class _BodyStepperState extends State<BodyStepper> {
 
   @override
   Widget build(BuildContext context) {
+    // * Sign-up validation services
+    validationService = Provider.of<SignupValidation>(context);
+
     controller = context.watch<SignupValidation>().getCarouselController;
-    var smoothIndicator = PageController();
+    pageController = context.watch<SignupValidation>().getPageController;
 
     Size size = MediaQuery.of(context).size;
     return Background(
@@ -43,19 +48,40 @@ class _BodyStepperState extends State<BodyStepper> {
             expandedHeight: 100,
           ),
           SliverToBoxAdapter(
-            child: CarouselSlider(
-              carouselController: controller,
-              options: CarouselOptions(
-                viewportFraction: 1.0,
-                initialPage: 0,
-                height: size.height,
-                enlargeCenterPage: false,
-                enableInfiniteScroll: false,
-              ),
-              items: [
-                AccountForm(),
-                ProfileForm(),
-                ContactForm(),
+            child: Stack(
+              children: [
+                CarouselSlider(
+                  carouselController: controller,
+                  options: CarouselOptions(
+                    viewportFraction: 1.0,
+                    initialPage: 0,
+                    height: size.height,
+                    enlargeCenterPage: false,
+                    enableInfiniteScroll: false,
+                    onPageChanged: (index, reason) {
+                      validationService.setIndexBySlider(index);
+                    },
+                  ),
+                  items: [
+                    AccountForm(),
+                    ProfileForm(),
+                    ContactForm(),
+                  ],
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SmoothPageIndicator(
+                      controller: pageController,
+                      count: 3,
+                      effect: ExpandingDotsEffect(
+                        dotColor: kPrimaryLightColor.withOpacity(0.5),
+                        activeDotColor: kPrimaryLightColor,
+                        expansionFactor: 2,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
