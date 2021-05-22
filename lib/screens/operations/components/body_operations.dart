@@ -1,9 +1,9 @@
 // ignore: unused_import
 import 'package:base_project/constants.dart';
 import 'package:base_project/models/bottom_nav_model.dart';
+import 'package:base_project/screens/details/details_screen.dart';
 import 'package:base_project/screens/gallery/gallery_screen.dart';
 import 'package:base_project/screens/home/home_screen.dart';
-import 'package:base_project/screens/profile/profile_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ class _BodyOperationsState extends State<BodyOperations> {
                   viewportFraction: 1.0,
                   initialPage: 0,
                   height: size.height,
-                  enlargeCenterPage: true,
+                  enlargeCenterPage: false,
                   onPageChanged: (index, reason) {
                     bottomNavModel.setIndexBySlider(index);
                   },
@@ -88,11 +88,11 @@ class _BodyOperationsState extends State<BodyOperations> {
                   /*
                 * Page Number #3
                 */
-                  const Text("3"),
+                  const DetailScreen(),
                   /*
                 * Page Number #4
                 */
-                  const PersonProfileScreen(),
+                  const Text("Search Page"),
                 ],
               );
             }),

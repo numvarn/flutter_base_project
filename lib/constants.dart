@@ -10,6 +10,13 @@ const kSecoundaryColor = Color(0xFF6F35A5);
 const kTextPrimaryColor = Color(0xFF6F35A5);
 const kTextSecondaryColor = Colors.black54;
 
+/*
+ * Main Margin and Padding 
+ */
+const boxMarginBottom = 20.0;
+const primaryMarginBottom = 10.0;
+const secondaryMarginBottom = 5.0;
+
 // * Setup TextTheme of this application
 final TextTheme baseFont = GoogleFonts.kanitTextTheme();
 
@@ -105,5 +112,18 @@ final ButtonStyle outlineCurveStyle = OutlinedButton.styleFrom(
   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.all(Radius.circular(200)),
+  ),
+);
+
+/*
+ * Outline button style
+ */
+final ButtonStyle roundBorderStyle = OutlinedButton.styleFrom(
+  primary: kPrimaryColor,
+  backgroundColor: kPrimaryLightColor.withOpacity(0.3),
+  side: BorderSide(color: kPrimaryLightColor, width: 1),
+  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(10)),
   ),
 );

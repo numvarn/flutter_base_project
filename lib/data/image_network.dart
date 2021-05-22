@@ -44,3 +44,16 @@ const List<Map<String, dynamic>> uploadedImage = [
     'image': 'https://numvarn.github.io/resume/asset/network_photos/cristina-gottardi-wndpWTiDuT0-unsplash.jpg',
   },
 ];
+
+const List<Map<String, dynamic>> qrcodeList = [
+  {
+    'id': 1,
+    'social': 'facebook',
+    'url': 'https://numvarn.github.io/resume/asset/images/qrcode/facebook.jpg',
+  },
+  {
+    'id': 2,
+    'social': 'line',
+    'url': 'https://numvarn.github.io/resume/asset/images/qrcode/line.jpg',
+  },
+];

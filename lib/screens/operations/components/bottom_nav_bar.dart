@@ -46,13 +46,13 @@ class BottomNavBar extends StatelessWidget {
                     textStyle: bottomTextStyle,
                   ),
                   GButton(
-                    icon: LineIcons.search,
-                    text: 'Search',
+                    icon: LineIcons.user,
+                    text: 'Profile',
                     textStyle: bottomTextStyle,
                   ),
                   GButton(
-                    icon: LineIcons.user,
-                    text: 'Profile',
+                    icon: LineIcons.search,
+                    text: 'Search',
                     textStyle: bottomTextStyle,
                   ),
                 ],
