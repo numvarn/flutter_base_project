@@ -2,6 +2,7 @@ import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/data/image_network.dart';
+import 'package:base_project/screens/details/detail_edit_screen.dart';
 import 'package:flutter/material.dart';
 
 class BodyDetail extends StatefulWidget {
@@ -100,7 +101,12 @@ class _BodyDetailState extends State<BodyDetail> {
                     SizedBox(
                       width: double.infinity,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DetailEditScreen()),
+                          );
+                        },
                         child: Text("แก้ไขประวัติ"),
                         style: roundBorderStyle,
                       ),
