@@ -31,7 +31,6 @@ class _BodyStepperState extends State<BodyStepper> {
     validationService = Provider.of<SignupValidation>(context);
 
     controller = context.watch<SignupValidation>().getCarouselController;
-    pageController = context.watch<SignupValidation>().getPageController;
 
     Size size = MediaQuery.of(context).size;
     return Background(
@@ -71,8 +70,8 @@ class _BodyStepperState extends State<BodyStepper> {
                 Positioned.fill(
                   child: Align(
                     alignment: Alignment.center,
-                    child: SmoothPageIndicator(
-                      controller: pageController,
+                    child: AnimatedSmoothIndicator(
+                      activeIndex: validationService.getSelectedIndex,
                       count: 3,
                       effect: ExpandingDotsEffect(
                         dotColor: Colors.grey.withOpacity(0.3),

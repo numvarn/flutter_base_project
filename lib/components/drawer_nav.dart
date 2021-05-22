@@ -1,4 +1,5 @@
 import 'package:base_project/constants.dart';
+import 'package:base_project/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerNavigator extends StatefulWidget {
@@ -68,7 +69,9 @@ class _DrawerNavigatorState extends State<DrawerNavigator> {
                       'ออกจากระบบ',
                       style: TextStyle(fontSize: textTheme.subtitle1.fontSize, color: kTextSecondaryColor),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+                    },
                   ),
                 ],
               ),

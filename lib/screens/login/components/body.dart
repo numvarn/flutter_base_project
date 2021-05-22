@@ -9,7 +9,6 @@ import 'package:base_project/components/already_have_an_account_acheck.dart';
 import 'package:base_project/components/rounded_button.dart';
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/components/rounded_password_field.dart';
-import 'package:flutter_svg/svg.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -36,11 +35,11 @@ class _BodyState extends State<Body> {
               "เข้าสู่ระบบเพื่อใช้งาน",
               style: appBarStyle,
             ),
-            SizedBox(height: size.height * 0.03),
+            /* SizedBox(height: size.height * 0.03),
             SvgPicture.asset(
               "assets/icons/login.svg",
               height: size.height * 0.35,
-            ),
+            ), */
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "อีเมล",

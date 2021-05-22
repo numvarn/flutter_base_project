@@ -1,13 +1,16 @@
 import 'package:base_project/screens/Login/login_screen.dart';
 import 'package:base_project/screens/signup/components/background.dart';
 import 'package:base_project/constants.dart';
+import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class CompletedSignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Provider.of<SignupValidation>(context, listen: false).removeListener(() {});
+    var validationService = Provider.of<SignupValidation>(context);
+
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -49,6 +52,8 @@ class CompletedSignUp extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
+                  // set carousel index to 0
+                  validationService.setIndex(0);
                 },
                 child: Text("เข้าใช้งานระบบ"),
               )

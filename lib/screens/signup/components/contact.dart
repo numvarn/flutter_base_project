@@ -86,7 +86,7 @@ class ContactFormState extends State<ContactForm> {
   }
 
   void _onSubmitConfirm() {
-    String msg = "";
+    String msg = "สร้างรายชื่อผู้ใช้งานเรียบร้อย";
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CompletedSignUp()),
