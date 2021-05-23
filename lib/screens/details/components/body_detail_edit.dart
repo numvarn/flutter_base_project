@@ -347,17 +347,24 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                           ],
                         ),
                       ),
-                      addressIsShow == false
-                          ? Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 14,
-                              color: kTextSecondaryColor,
-                            )
-                          : Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 22,
-                              color: kTextSecondaryColor,
-                            ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            addressIsShow == false
+                                ? Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 14,
+                                    color: kTextSecondaryColor,
+                                  )
+                                : Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    size: 22,
+                                    color: kTextSecondaryColor,
+                                  ),
+                          ],
+                        ),
+                      ),
                       Divider(),
                     ],
                   ),

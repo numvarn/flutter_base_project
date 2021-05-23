@@ -33,75 +33,77 @@ class _BodyStepperState extends State<BodyStepper> {
     controller = context.watch<SignupValidation>().getCarouselController;
 
     Size size = MediaQuery.of(context).size;
-    return CustomScrollView(
-      physics: NeverScrollableScrollPhysics(),
-      slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Center(
-              child: Container(
-                width: size.width * .85,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "สร้างบัญชีผู้ใช้งานใหม่",
-                      style: pageHeaderStyle,
-                    ),
-                    Text(
-                      "กรอกข้อมูลส่วนตัวให้ครบถ้วน",
-                      style: pageSubHeaderStyle,
-                    ),
-                    Text(
-                      "และบันทึกเพื่อสร้างบัญชีผู้ใช้งานระบบรายใหม่",
-                      style: pageSubHeaderStyle,
-                    ),
-                  ],
+    return Background(
+      child: CustomScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Center(
+                child: Container(
+                  width: size.width * .85,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "สร้างบัญชีผู้ใช้งานใหม่",
+                        style: pageHeaderStyle,
+                      ),
+                      Text(
+                        "กรอกข้อมูลส่วนตัวให้ครบถ้วน",
+                        style: pageSubHeaderStyle,
+                      ),
+                      Text(
+                        "และบันทึกเพื่อสร้างบัญชีผู้ใช้งานระบบรายใหม่",
+                        style: pageSubHeaderStyle,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Stack(
-            children: [
-              CarouselSlider(
-                carouselController: controller,
-                options: CarouselOptions(
-                  viewportFraction: 1.0,
-                  initialPage: 0,
-                  height: size.height,
-                  enlargeCenterPage: false,
-                  enableInfiniteScroll: false,
-                  onPageChanged: (index, reason) {
-                    validationService.setIndexBySlider(index);
-                  },
+          SliverToBoxAdapter(
+            child: Stack(
+              children: [
+                CarouselSlider(
+                  carouselController: controller,
+                  options: CarouselOptions(
+                    viewportFraction: 1.0,
+                    initialPage: 0,
+                    height: size.height,
+                    enlargeCenterPage: false,
+                    enableInfiniteScroll: false,
+                    onPageChanged: (index, reason) {
+                      validationService.setIndexBySlider(index);
+                    },
+                  ),
+                  items: [
+                    AccountForm(),
+                    ProfileForm(),
+                    ContactForm(),
+                  ],
                 ),
-                items: [
-                  AccountForm(),
-                  ProfileForm(),
-                  ContactForm(),
-                ],
-              ),
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: AnimatedSmoothIndicator(
-                    activeIndex: validationService.getSelectedIndex,
-                    count: 3,
-                    effect: ExpandingDotsEffect(
-                      dotColor: Colors.grey.withOpacity(0.3),
-                      activeDotColor: kPrimaryLightColor,
-                      expansionFactor: 2,
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: AnimatedSmoothIndicator(
+                      activeIndex: validationService.getSelectedIndex,
+                      count: 3,
+                      effect: ExpandingDotsEffect(
+                        dotColor: Colors.grey.withOpacity(0.3),
+                        activeDotColor: kPrimaryLightColor,
+                        expansionFactor: 2,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
