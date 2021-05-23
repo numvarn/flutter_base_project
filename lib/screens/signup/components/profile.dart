@@ -1,4 +1,5 @@
 import 'package:base_project/components/rounded_input_field.dart';
+import 'package:base_project/components/text_field_container.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +41,6 @@ class ProfileFormState extends State<ProfileForm> {
         child: Column(
           children: [
             _genderChoice(context),
-            SizedBox(
-              height: 10,
-            ),
             RoundedInputField(
               hintText: "ชื่อ",
               errorText: validationService.firstname.error,
@@ -119,27 +117,29 @@ class ProfileFormState extends State<ProfileForm> {
       S2Choice<String>(value: 'female', title: 'หญิง'),
     ];
 
-    return SmartSelect<String>.single(
-      title: 'เพศ',
-      value: genderValue,
-      choiceDivider: false,
-      modalConfirm: false,
-      choiceItems: options,
-      modalType: S2ModalType.popupDialog,
-      modalStyle: S2ModalStyle(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+    return TextFieldContainer(
+      child: SmartSelect<String>.single(
+        title: 'เพศ',
+        value: genderValue,
+        choiceDivider: false,
+        modalConfirm: false,
+        choiceItems: options,
+        modalType: S2ModalType.popupDialog,
+        modalStyle: S2ModalStyle(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          elevation: 5,
+          backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+          clipBehavior: Clip.antiAlias,
         ),
-        elevation: 5,
-        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-        clipBehavior: Clip.antiAlias,
+        modalHeaderStyle: S2ModalHeaderStyle(
+          centerTitle: false,
+        ),
+        onChange: (state) {
+          validationService.setGender(state.value);
+        },
       ),
-      modalHeaderStyle: S2ModalHeaderStyle(
-        centerTitle: false,
-      ),
-      onChange: (state) {
-        validationService.setGender(state.value);
-      },
     );
   }
 

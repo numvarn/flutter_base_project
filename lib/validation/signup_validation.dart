@@ -26,8 +26,6 @@ class SignupValidation with ChangeNotifier {
   ValidationItem get password => _password;
   ValidationItem get passwordConfirm => _passwordConfirm;
 
-  get gender => _gender;
-
   ValidationItem get firstname => _firstname;
   ValidationItem get lastname => _lastname;
   ValidationItem get dob => _dob;
@@ -35,6 +33,9 @@ class SignupValidation with ChangeNotifier {
   ValidationItem get phone => _phone;
   ValidationItem get address => _address;
 
+  get gender => _gender;
+
+  // * -------------------------------------
   // * Get current carousel index
   int _selectedIndex = 0;
 
@@ -62,7 +63,7 @@ class SignupValidation with ChangeNotifier {
     notifyListeners();
   }
 
-  // -------------------------------------
+  // * -------------------------------------
 
   // * Check Account session is valid ??
   bool accountIsValid() {

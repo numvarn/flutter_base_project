@@ -6,6 +6,8 @@ import 'package:base_project/screens/details/detail_edit_screen.dart';
 import 'package:flutter/material.dart';
 
 class BodyDetail extends StatefulWidget {
+  const BodyDetail({Key key}) : super(key: key);
+
   @override
   _BodyDetailState createState() => _BodyDetailState();
 }
@@ -13,6 +15,7 @@ class BodyDetail extends StatefulWidget {
 class _BodyDetailState extends State<BodyDetail> {
   @override
   Widget build(BuildContext context) {
+    print("build detail page");
     Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
