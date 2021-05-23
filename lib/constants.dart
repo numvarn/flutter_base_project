@@ -29,6 +29,18 @@ final TextStyle appBarStyle = GoogleFonts.kanit(
   color: kTextPrimaryColor,
 );
 
+// * Page Header Text Style
+final TextStyle pageHeaderStyle = GoogleFonts.kanit(
+  fontSize: 24,
+  color: kTextPrimaryColor,
+);
+
+// * AppBar Text Style
+final TextStyle pageSubHeaderStyle = GoogleFonts.kanit(
+  fontSize: 16,
+  color: kTextSecondaryColor,
+);
+
 // * Bottom Bar Text Style
 final TextStyle bottomTextStyle = TextStyle(
   color: kPrimaryColor,
