@@ -48,6 +48,15 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
     // * Sign-up validation services
     validationService = Provider.of<SignupValidation>(context);
 
+    /*
+    * Initial validator
+    */
+    validationService.initFirstname(profile['firstname']);
+    validationService.initLastname(profile['lastname']);
+    validationService.initDOB(profile['dob']);
+    validationService.initPhone(profile['phone']);
+    validationService.initAddress(profile['address']);
+
     size = MediaQuery.of(context).size;
 
     return SingleChildScrollView(
@@ -176,7 +185,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                             controller: nameController,
                             icon: Icons.person_outline,
                             onChanged: (firstname) {
-                              validationService.validateFirstName(firstname);
+                              validationService.validateFirstName(nameController.text);
                             },
                           ),
                         ),
@@ -483,7 +492,12 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
       borderRadius: 10,
       elevation: 0,
       onPressed: () {
-        _onSubmit();
+        if (validationService.profileIsValid() && validationService.contactIsValid()) {
+          _onSubmit();
+        } else {
+          print("Invalid");
+          _btnController.stop();
+        }
       },
     );
   }

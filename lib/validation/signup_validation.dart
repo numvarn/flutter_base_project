@@ -76,11 +76,35 @@ class SignupValidation with ChangeNotifier {
 
   // * Check Profile session is valid ??
   bool profileIsValid() {
-    if (_firstname.value != null && _lastname.value != null && _dob.value != null) {
+    print(_firstname.value);
+    if (_firstname.value != "" && _lastname.value != null && _dob.value != null) {
       return true;
     } else {
       return false;
     }
+  }
+
+  /* 
+   * Inint data in form edit 
+   */
+  void initFirstname(value) {
+    _firstname.setValue(value);
+  }
+
+  void initLastname(value) {
+    _lastname.setValue(value);
+  }
+
+  void initDOB(value) {
+    _dob.setValue(value);
+  }
+
+  void initPhone(value) {
+    _phone.setValue(value);
+  }
+
+  void initAddress(value) {
+    _address.setValue(value);
   }
 
   // * Check Contact session is valid ??

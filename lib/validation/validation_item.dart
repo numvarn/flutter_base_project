@@ -1,19 +1,24 @@
 class ValidationItem {
-  String value;
-  String error;
+  // ignore: unused_field
+  String _value;
+  // ignore: unused_field
+  String _error;
 
-  ValidationItem(this.value, this.error);
+  ValidationItem(this._value, this._error);
 
   void setValueError(value, errorMsg) {
-    this.value = value;
-    this.error = errorMsg;
+    this._value = value;
+    this._error = errorMsg;
   }
 
   void setValue(String value) {
-    this.value = value;
+    this._value = value;
   }
 
   void setError(String errorMsg) {
-    this.error = errorMsg;
+    this._error = errorMsg;
   }
+
+  get value => _value;
+  get error => _error;
 }
