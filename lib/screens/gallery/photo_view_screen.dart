@@ -1,7 +1,11 @@
 import 'package:base_project/components/dialog_confirm.dart';
+import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
+import 'package:base_project/data/image_network.dart';
+import 'package:base_project/models/photos_model.dart';
 import 'package:base_project/screens/gallery/components/body_photo_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 class PhotoviewScreen extends StatelessWidget {
@@ -55,10 +59,76 @@ class PhotoviewScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: PhotoViewBody(),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => displayBottomSheet(context),
+        child: Icon(Icons.image_outlined),
+      ),
     );
   }
 
   void _onShareWithEmptyOrigin(BuildContext context) async {
     await Share.share("ทุเรียนลาวา ศรีสะเกษ\nhttps://www.lavadurian.com/shopping/product/195");
+  }
+
+  /*
+   * Scrollable ListView 
+   */
+  void displayBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: Consumer<PhotosModel>(
+              builder: (context, photosModel, child) => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text(
+                          "My Gallery",
+                          style: pageSubHeaderStyle,
+                        ),
+                      ),
+                      SizedBox(
+                        height: boxMarginBottom,
+                      ),
+                      Center(
+                        child: Container(
+                          height: 70,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: List.generate(galleryList.length, (index) {
+                              return Container(
+                                width: 80,
+                                // color: Colors.purple[600],
+                                child: Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(200.0),
+                                    child: InkWell(
+                                      child: CachedImageGalleryContainer(
+                                        imgUrl: galleryList[index],
+                                        height: 70,
+                                        width: 70,
+                                      ),
+                                      onTap: () {
+                                        photosModel.setImgUrl(galleryList[index]);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        });
   }
 }

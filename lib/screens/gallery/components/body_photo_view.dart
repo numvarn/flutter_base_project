@@ -43,7 +43,7 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
              */
               CachedImageGalleryContainer(
                 imgUrl: photosModel.imgUrl,
-                height: 350,
+                height: size.height * .5,
               ),
               Container(
                 width: size.width,
@@ -155,40 +155,6 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
                       '${filename[filename.length - 1].toUpperCase()}',
                     ),
                   ],
-                ),
-              ),
-              Divider(),
-              /*
-             * Scrollable ListView 
-            */
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  height: 70,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: List.generate(galleryList.length, (index) {
-                      return Container(
-                        width: 80,
-                        // color: Colors.purple[600],
-                        child: Center(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(200.0),
-                            child: InkWell(
-                              child: CachedImageGalleryContainer(
-                                imgUrl: galleryList[index],
-                                height: 70,
-                                width: 70,
-                              ),
-                              onTap: () {
-                                photosModel.setImgUrl(galleryList[index]);
-                              },
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
                 ),
               ),
             ],

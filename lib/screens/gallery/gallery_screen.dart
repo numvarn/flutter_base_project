@@ -71,7 +71,8 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                     fit: FlexFit.tight,
                     child: StaggeredGridView.countBuilder(
                       padding: EdgeInsets.only(bottom: size.height * .4),
-                      crossAxisCount: 4,
+                      // crossAxisCount: 4,
+                      crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 8 : 4,
                       mainAxisSpacing: 6.0,
                       crossAxisSpacing: 6.0,
                       itemCount: galleryList.length,

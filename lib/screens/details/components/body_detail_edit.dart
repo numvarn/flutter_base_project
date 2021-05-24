@@ -1,6 +1,7 @@
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/components/text_field_container.dart';
 import 'package:base_project/constants.dart';
+import 'package:base_project/data/profile.dart';
 import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -35,12 +36,12 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   /*
   * Initial Controller
   */
-  String genderValue = 'male';
-  var nameController = TextEditingController(text: "พิศาล");
-  var lastnameContaller = TextEditingController(text: "สุขขี");
-  var phoneController = TextEditingController(text: "084-298-2456");
-  var dobController = TextEditingController(text: "1981 - 06 - 28");
-  var addressController = TextEditingController(text: "40 / 6 หมู่ 6 ต.หนองครก อ.เมือง ศรีสะเกษ 33000");
+  String genderValue = profile['gender'];
+  var nameController = TextEditingController(text: profile['firstname']);
+  var lastnameContaller = TextEditingController(text: profile['lastname']);
+  var phoneController = TextEditingController(text: profile['phone']);
+  var dobController = TextEditingController(text: profile['dob']);
+  var addressController = TextEditingController(text: profile['address']);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              'ชาย',
+                              profile['gender'],
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -141,7 +142,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              'พิศาล สุขขี',
+                              '${profile['firstname']} ${profile['lastname']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -214,7 +215,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '084-298-2456',
+                              '${profile['phone']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -277,7 +278,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '1981 - 06 - 28',
+                              '${profile['dob']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -330,7 +331,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -339,7 +340,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '40 / 6 หมู่ 6 ตำบล หนองครก อำเภอเมือง จังหวัดศรีสะเกษ 33000',
+                              '${profile['address']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
