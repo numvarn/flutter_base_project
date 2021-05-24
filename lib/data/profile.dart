@@ -1,5 +1,6 @@
 final Map<String, dynamic> profile = {
   'gender': 'ชาย',
+  'gender_eng': 'male',
   'firstname': 'พิศาล',
   'lastname': 'สุขขี',
   'phone': '084-208-2456',

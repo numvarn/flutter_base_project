@@ -36,7 +36,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   /*
   * Initial Controller
   */
-  String genderValue = profile['gender'];
+  String genderValue = profile['gender_eng'];
   var nameController = TextEditingController(text: profile['firstname']);
   var lastnameContaller = TextEditingController(text: profile['lastname']);
   var phoneController = TextEditingController(text: profile['phone']);

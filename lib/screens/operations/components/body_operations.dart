@@ -69,7 +69,7 @@ class _BodyOperationsState extends State<BodyOperations> {
                 carouselController: bottomNavModel.getCarouselController,
                 options: CarouselOptions(
                   viewportFraction: 1.0,
-                  initialPage: 0,
+                  initialPage: bottomNavModel.getSelectedIndex,
                   height: size.height,
                   enlargeCenterPage: false,
                   onPageChanged: (index, reason) {
@@ -92,7 +92,7 @@ class _BodyOperationsState extends State<BodyOperations> {
                   /*
                 * Page Number #4
                 */
-                  const Text("Search Page"),
+                  const Text("Hello"), //SearchScreen(),
                 ],
               );
             }),

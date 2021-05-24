@@ -1,6 +1,5 @@
 import 'package:base_project/components/img_cached_gallery_container.dart';
 import 'package:base_project/constants.dart';
-import 'package:base_project/data/image_network.dart';
 import 'package:base_project/models/photos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

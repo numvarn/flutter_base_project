@@ -2,6 +2,7 @@ import 'package:base_project/components/drawer_nav.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/components/body_operations.dart';
 import 'package:base_project/screens/operations/components/bottom_nav_bar.dart';
+import 'package:base_project/screens/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,12 @@ class OperationScreen extends StatelessWidget {
             icon: Icon(
               Icons.search_rounded,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
+            },
           ),
           IconButton(
             icon: Icon(

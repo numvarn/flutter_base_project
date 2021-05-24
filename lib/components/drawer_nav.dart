@@ -1,4 +1,5 @@
 import 'package:base_project/constants.dart';
+import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:base_project/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +46,9 @@ class _DrawerNavigatorState extends State<DrawerNavigator> {
                       'หน้าแรก',
                       style: TextStyle(fontSize: textTheme.subtitle1.fontSize, color: kTextSecondaryColor),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => OperationScreen()));
+                    },
                   ),
                 ],
               ),
