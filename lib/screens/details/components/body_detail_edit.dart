@@ -44,6 +44,11 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   var addressController = TextEditingController(text: profile['address']);
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // * Sign-up validation services
     validationService = Provider.of<SignupValidation>(context);
@@ -51,11 +56,11 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
     /*
     * Initial validator
     */
-    validationService.initFirstname(profile['firstname']);
-    validationService.initLastname(profile['lastname']);
-    validationService.initDOB(profile['dob']);
-    validationService.initPhone(profile['phone']);
-    validationService.initAddress(profile['address']);
+    validationService.initFirstname(nameController.text);
+    validationService.initLastname(lastnameContaller.text);
+    validationService.initDOB(dobController.text);
+    validationService.initPhone(phoneController.text);
+    validationService.initAddress(addressController.text);
 
     size = MediaQuery.of(context).size;
 
@@ -184,8 +189,8 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                             errorText: validationService.firstname.error,
                             controller: nameController,
                             icon: Icons.person_outline,
-                            onChanged: (firstname) {
-                              validationService.validateFirstName(nameController.text);
+                            onChanged: (value) {
+                              validationService.validateFirstName(value);
                             },
                           ),
                         ),
@@ -196,8 +201,8 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                             errorText: validationService.lastname.error,
                             controller: lastnameContaller,
                             icon: Icons.person_outline,
-                            onChanged: (lastname) {
-                              validationService.validateLastName(lastname);
+                            onChanged: (value) {
+                              validationService.validateLastName(value);
                             },
                           ),
                         ),
@@ -431,7 +436,6 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
       minTime: DateTime(1970, 1, 1),
       maxTime: DateTime(2022, 12, 31),
       onConfirm: (date) {
-        print('confirm $date');
         _date = '${date.year} - ${date.month} - ${date.day}';
         setState(() {
           dobController.text = _date.toString();
@@ -495,7 +499,6 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
         if (validationService.profileIsValid() && validationService.contactIsValid()) {
           _onSubmit();
         } else {
-          print("Invalid");
           _btnController.stop();
         }
       },

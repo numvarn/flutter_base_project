@@ -67,7 +67,11 @@ class SignupValidation with ChangeNotifier {
 
   // * Check Account session is valid ??
   bool accountIsValid() {
-    if (_email.value != null && _password.value != null && _passwordConfirm != null && _passwordConfirm.error == null) {
+    bool emailFlag = _email.value?.isNotEmpty ?? false;
+    bool passwordFlag = _password.value?.isNotEmpty ?? false;
+    bool passwordConfirmFlag = _passwordConfirm.value?.isNotEmpty ?? false;
+
+    if (emailFlag && passwordFlag && passwordConfirmFlag) {
       return true;
     } else {
       return false;
@@ -76,8 +80,23 @@ class SignupValidation with ChangeNotifier {
 
   // * Check Profile session is valid ??
   bool profileIsValid() {
-    print(_firstname.value);
-    if (_firstname.value != "" && _lastname.value != null && _dob.value != null) {
+    bool firstNameFlag = _firstname.value?.isNotEmpty ?? false;
+    bool lastNameFlag = _lastname.value?.isNotEmpty ?? false;
+    bool dobFlag = _dob.value?.isNotEmpty ?? false;
+
+    if (firstNameFlag && lastNameFlag && dobFlag) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // * Check Contact session is valid ??
+  bool contactIsValid() {
+    bool phoneFlag = _phone.value?.isNotEmpty ?? false;
+    bool addressFlag = _address.value.isNotEmpty ?? false;
+
+    if (phoneFlag && addressFlag) {
       return true;
     } else {
       return false;
@@ -89,31 +108,27 @@ class SignupValidation with ChangeNotifier {
    */
   void initFirstname(value) {
     _firstname.setValue(value);
+    // _firstname.setError(null);
   }
 
   void initLastname(value) {
     _lastname.setValue(value);
+    // _lastname.setError(null);
   }
 
   void initDOB(value) {
     _dob.setValue(value);
+    // _dob.setError(null);
   }
 
   void initPhone(value) {
     _phone.setValue(value);
+    // _phone.setError(null);
   }
 
   void initAddress(value) {
     _address.setValue(value);
-  }
-
-  // * Check Contact session is valid ??
-  bool contactIsValid() {
-    if (_phone.value != null && _address.value != null) {
-      return true;
-    } else {
-      return false;
-    }
+    // _address.setError(null);
   }
 
   // * Validate email
