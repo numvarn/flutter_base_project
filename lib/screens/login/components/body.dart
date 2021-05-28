@@ -1,7 +1,9 @@
+import 'package:base_project/class/auth.dart';
 import 'package:base_project/components/dialog_alert.dart';
 import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:base_project/screens/login/components/background.dart';
 import 'package:base_project/screens/signup/signup_screen.dart';
@@ -20,6 +22,30 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  void _signInWithEmailAndPassword(email, password) {
+    var authHandler = new Auth();
+
+    authHandler.handleSignInEmail(email, password).then((User user) {
+      if (user != null) {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(builder: (context) => new OperationScreen()),
+        );
+      }
+    }).catchError((e) {
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: "ข้อมูลไม่ถูกต้อง",
+          subtitle: "กรุณาตรวจสอบข้อมูลอีกครั้ง",
+          onpress: () {
+            Navigator.pop(context);
+          },
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     String emailField = "";
@@ -56,24 +82,9 @@ class _BodyState extends State<Body> {
               text: "เข้าสู่ระบบ",
               press: () {
                 if (emailField.isNotEmpty && passwordField.isNotEmpty) {
-                  return showDialog(
-                    context: context,
-                    builder: (context) {
-                      return CustomConfirmDialog(
-                        title: "กำลังดำเนินการเข้าสู่ระบบ",
-                        subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
-                        onpress: () {
-                          print("Processing");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => OperationScreen()),
-                          );
-                        },
-                      );
-                    },
-                  );
+                  _signInWithEmailAndPassword(emailField, passwordField);
                 } else {
-                  return showDialog(
+                  showDialog(
                     context: context,
                     builder: (context) {
                       return CustomAlertDialog(
