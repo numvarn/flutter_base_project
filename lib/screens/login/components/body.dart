@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:base_project/class/auth.dart';
 import 'package:base_project/components/dialog_alert.dart';
 import 'package:base_project/constants.dart';
@@ -27,16 +29,13 @@ class _BodyState extends State<Body> {
   void _signInWithEmailAndPassword(email, password) {
     var authHandler = new Auth();
 
-    authHandler.handleSignInEmail(email, password).then((User user) {
+    authHandler.handleSignInEmail(context, email, password).then((User user) {
       if (user != null) {
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
         );
       }
-    }).catchError((e) {
-      final snackBar = SnackBar(content: Text(e.message));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
