@@ -105,7 +105,7 @@ class Auth {
 
   Future<Map<String, dynamic>> signInWithFacebook(BuildContext context) async {
     String message;
-    Map<String, dynamic> userData = {};
+    Map<String, dynamic> userData;
 
     final LoginResult result = await FacebookAuth.instance.login(); // by default we request the email and the public profile
     if (result.status == LoginStatus.success) {
