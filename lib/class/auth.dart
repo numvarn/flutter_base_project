@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 class Auth {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  /* 
+  * Login by using user & password
+  */ 
   Future<User> handleSignInEmail(BuildContext context, String email, String password) async {
     User user;
     try {
@@ -24,6 +27,9 @@ class Auth {
     return user;
   }
 
+  /* 
+  * Sign up by using username & password
+  */ 
   Future<User> handleSignUp(BuildContext context, email, password) async {
     User user;
     String message = "";
@@ -51,7 +57,9 @@ class Auth {
     return user;
   }
 
-  // Once signed in, return the User
+  /* 
+  * Login with Google 
+  */ 
   Future<User> signInWithGoogle(BuildContext context) async {
     User user;
     String message;
