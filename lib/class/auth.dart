@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth {
@@ -7,7 +10,7 @@ class Auth {
 
   /* 
   * Login by using user & password
-  */ 
+  */
   Future<User> handleSignInEmail(BuildContext context, String email, String password) async {
     User user;
     try {
@@ -29,7 +32,7 @@ class Auth {
 
   /* 
   * Sign up by using username & password
-  */ 
+  */
   Future<User> handleSignUp(BuildContext context, email, password) async {
     User user;
     String message = "";
@@ -59,7 +62,7 @@ class Auth {
 
   /* 
   * Login with Google 
-  */ 
+  */
   Future<User> signInWithGoogle(BuildContext context) async {
     User user;
     String message;
@@ -98,5 +101,26 @@ class Auth {
     );
 
     return user;
+  }
+
+  Future<Map<String, dynamic>> signInWithFacebook(BuildContext context) async {
+    String message;
+    Map<String, dynamic> userData = {};
+
+    final LoginResult result = await FacebookAuth.instance.login(); // by default we request the email and the public profile
+    if (result.status == LoginStatus.success) {
+      userData = await FacebookAuth.instance.getUserData();
+      message = 'Log-in success';
+    } else {
+      message = 'can not login';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 5),
+      ),
+    );
+    return userData;
   }
 }

@@ -45,10 +45,25 @@ class _BodyState extends State<Body> {
   /*
   * Login by Firebase auth using Google
   */
-  void _googleSingIn(BuildContext context) {
+  void _googleSignIn(BuildContext context) {
     var authHandler = new Auth();
     authHandler.signInWithGoogle(context).then((User user) {
       if (user != null) {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(builder: (context) => new OperationScreen()),
+        );
+      }
+    });
+  }
+
+  /*
+  * Login by Firebase auth using Facebook
+  */
+  void _facebookSignIn(BuildContext context) {
+    var authHandler = new Auth();
+    authHandler.signInWithFacebook(context).then((Map userData) {
+      if (userData != null) {
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
@@ -148,12 +163,14 @@ class _BodyState extends State<Body> {
                 children: <Widget>[
                   SocalIcon(
                     iconSrc: "assets/icons/facebook.svg",
-                    press: () {},
+                    press: () {
+                      _facebookSignIn(context);
+                    },
                   ),
                   SocalIcon(
                     iconSrc: "assets/icons/google-plus.svg",
                     press: () {
-                      _googleSingIn(context);
+                      _googleSignIn(context);
                     },
                   ),
                 ],
