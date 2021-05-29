@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:base_project/class/auth.dart';
-import 'package:base_project/components/dialog_alert.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +36,21 @@ class _BodyState extends State<Body> {
     });
   }
 
+  // * Validate email
+  bool _validateEmail(String email) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern);
+
+    if (!regex.hasMatch(email)) {
+      final snackBar = SnackBar(content: Text("Invalid email format"));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     String emailField = "";
@@ -69,21 +81,10 @@ class _BodyState extends State<Body> {
             RoundedButton(
               text: "เข้าสู่ระบบ",
               press: () {
-                if (emailField.isNotEmpty && passwordField.isNotEmpty) {
+                if (_validateEmail(emailField) && passwordField.isNotEmpty) {
                   _signInWithEmailAndPassword(emailField, passwordField);
                 } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return CustomAlertDialog(
-                        title: "ข้อมูลไม่ถูกต้อง",
-                        subtitle: "กรุณาตรวจสอบข้อมูลอีกครั้ง",
-                        onpress: () {
-                          Navigator.pop(context);
-                        },
-                      );
-                    },
-                  );
+                  print("Invalid data");
                 }
               },
             ),
