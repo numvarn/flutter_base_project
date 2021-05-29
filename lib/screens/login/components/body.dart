@@ -1,4 +1,4 @@
-import 'package:base_project/class/auth.dart';
+import 'package:base_project/class/firebaseAuth.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:base_project/screens/signup/components/or_divider.dart';

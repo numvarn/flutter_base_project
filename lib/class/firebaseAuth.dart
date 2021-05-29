@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter/material.dart';
@@ -82,12 +81,13 @@ class Auth {
 
       user = result.user;
       message = 'Now, you log in on ${user.displayName}';
-    } on FirebaseAuthException catch (e) {
+    } on PlatformException catch (e) {
       if (e.code == 'sign_in_canceled') {
         message = 'The user canceled the sign-in flow.';
       }
     } catch (e) {
-      message = 'Error ouccar when login';
+      message = 'Log-in error';
+      print(e.toString());
     }
 
     final snackBar = SnackBar(
