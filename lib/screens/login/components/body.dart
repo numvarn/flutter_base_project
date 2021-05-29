@@ -1,6 +1,5 @@
 import 'package:base_project/class/auth.dart';
 import 'package:base_project/components/dialog_alert.dart';
-import 'package:base_project/components/dialog_confirm.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -33,16 +32,8 @@ class _BodyState extends State<Body> {
         );
       }
     }).catchError((e) {
-      showDialog(
-        context: context,
-        builder: (context) => CustomAlertDialog(
-          title: "ข้อมูลไม่ถูกต้อง",
-          subtitle: "กรุณาตรวจสอบข้อมูลอีกครั้ง",
-          onpress: () {
-            Navigator.pop(context);
-          },
-        ),
-      );
+      final snackBar = SnackBar(content: Text(e.message));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -61,11 +52,6 @@ class _BodyState extends State<Body> {
               "เข้าสู่ระบบเพื่อใช้งาน",
               style: appBarStyle,
             ),
-            /* SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
-            ), */
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "อีเมล",
