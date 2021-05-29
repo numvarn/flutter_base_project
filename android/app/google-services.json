@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "316899571497-lpciid2fvke8ebq0ga4ie7l4drc8am0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.phisan.baseproject",
+            "certificate_hash": "20a48b6f8c435b6f5640ea0797f2b847fe59f090"
+          }
+        },
+        {
           "client_id": "316899571497-phplgrde01kvt2q99adnj9kr27m2rj2o.apps.googleusercontent.com",
           "client_type": 3
         }

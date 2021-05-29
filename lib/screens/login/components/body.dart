@@ -48,7 +48,6 @@ class _BodyState extends State<Body> {
   void _googleSignIn(BuildContext context) {
     var authHandler = new Auth();
     authHandler.signInWithGoogle(context).then((User user) {
-      print(user);
       if (user != null) {
         Navigator.push(
           context,
