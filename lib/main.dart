@@ -7,9 +7,9 @@ import 'package:base_project/screens/welcome/welcome_screen.dart';
 import 'package:base_project/constants.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // Firebase.initializeApp();
   runApp(MyApp());
 }
 
