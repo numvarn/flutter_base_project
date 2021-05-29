@@ -51,20 +51,44 @@ class Auth {
     return user;
   }
 
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+  // Once signed in, return the User
+  Future<User> signInWithGoogle(BuildContext context) async {
+    User user;
+    String message;
 
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    try {
+      // Trigger the authentication flow
+      final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential result = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      user = result.user;
+      message = 'Now, you log in on ${user.displayName}';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'sign_in_canceled') {
+        message = 'The user canceled the sign-in flow.';
+      }
+    } catch (e) {
+      message = 'Error ouccar when login';
+    }
+
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 5),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBar,
     );
 
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return user;
   }
 }

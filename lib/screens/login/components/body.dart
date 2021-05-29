@@ -42,6 +42,21 @@ class _BodyState extends State<Body> {
     });
   }
 
+  /*
+  * Login by Firebase auth using Google
+  */
+  void _googleSingIn(BuildContext context) {
+    var authHandler = new Auth();
+    authHandler.signInWithGoogle(context).then((User user) {
+      if (user != null) {
+        Navigator.push(
+          context,
+          new MaterialPageRoute(builder: (context) => new OperationScreen()),
+        );
+      }
+    });
+  }
+
   // * Validate email
   bool _validateEmail(String email) {
     Pattern pattern =
@@ -138,8 +153,7 @@ class _BodyState extends State<Body> {
                   SocalIcon(
                     iconSrc: "assets/icons/google-plus.svg",
                     press: () {
-                      var authHandler = new Auth();
-                      authHandler.signInWithGoogle();
+                      _googleSingIn(context);
                     },
                   ),
                 ],
