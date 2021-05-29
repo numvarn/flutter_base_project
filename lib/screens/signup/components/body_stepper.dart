@@ -35,7 +35,7 @@ class _BodyStepperState extends State<BodyStepper> {
     Size size = MediaQuery.of(context).size;
     return Background(
       child: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: AlwaysScrollableScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Padding(
@@ -86,15 +86,18 @@ class _BodyStepperState extends State<BodyStepper> {
                   ],
                 ),
                 Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: AnimatedSmoothIndicator(
-                      activeIndex: validationService.getSelectedIndex,
-                      count: 3,
-                      effect: ExpandingDotsEffect(
-                        dotColor: Colors.grey.withOpacity(0.3),
-                        activeDotColor: kPrimaryLightColor,
-                        expansionFactor: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 150),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: AnimatedSmoothIndicator(
+                        activeIndex: validationService.getSelectedIndex,
+                        count: 3,
+                        effect: ExpandingDotsEffect(
+                          dotColor: Colors.grey.withOpacity(0.3),
+                          activeDotColor: kPrimaryLightColor,
+                          expansionFactor: 2,
+                        ),
                       ),
                     ),
                   ),

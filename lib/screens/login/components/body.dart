@@ -21,6 +21,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  /*
+  * Login by Firebase auth using email & password
+  */
   void _signInWithEmailAndPassword(email, password) {
     var authHandler = new Auth();
 
