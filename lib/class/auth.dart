@@ -7,7 +7,7 @@ class Auth {
   Future<User> handleSignInEmail(BuildContext context, String email, String password) async {
     User user;
     try {
-      UserCredential result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await auth.signInWithEmailAndPassword(email: email, password: password);
       user = result.user;
     } on FirebaseAuthException catch (e) {
       String errorMsg = "";
@@ -23,20 +23,30 @@ class Auth {
     return user;
   }
 
-  Future<User> handleSignUp(email, password) async {
+  Future<User> handleSignUp(BuildContext context, email, password) async {
     User user;
+    String message = "";
     try {
-      UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await auth.createUserWithEmailAndPassword(email: email, password: password);
       user = result.user;
+      message = 'สร้างรายชื่อผู้ใช้งานเรียบร้อย';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        message = 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        message = 'The account already exists for that email.';
       }
     } catch (e) {
-      print(e);
+      message = e.toString();
     }
+
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 5),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBar,
+    );
     return user;
   }
 }

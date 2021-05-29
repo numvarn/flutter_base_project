@@ -1,11 +1,13 @@
-import 'package:base_project/components/dialog_confirm.dart';
+import 'package:base_project/class/auth.dart';
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/signup/components/completed_signup.dart';
 import 'package:base_project/validation/signup_validation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class ContactForm extends StatefulWidget {
   @override
@@ -20,6 +22,8 @@ class ContactFormState extends State<ContactForm> {
   static TextEditingController addressController = new TextEditingController();
   static TextEditingController mobileController = new TextEditingController();
 
+  final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
   // * mark text form field
   var maskPhoneFormatter = new MaskTextInputFormatter(mask: '###-###-####', filter: {"#": RegExp(r'[0-9]')});
 
@@ -28,6 +32,24 @@ class ContactFormState extends State<ContactForm> {
     // * Sign-up validation services
     validationService = Provider.of<SignupValidation>(context);
     Size size = MediaQuery.of(context).size;
+
+    /*
+    * Login button
+    */
+    final _submitButton = RoundedLoadingButton(
+      child: Text(
+        "ลงทะเบียนผู้ใช้",
+        textAlign: TextAlign.center,
+        style: TextStyle(color: kPrimaryColor),
+      ),
+      controller: _btnController,
+      elevation: 0,
+      width: MediaQuery.of(context).size.width,
+      color: kPrimaryLightColor,
+      onPressed: () {
+        _validateDataForm();
+      },
+    );
 
     return Container(
       width: size.width * .8,
@@ -59,16 +81,7 @@ class ContactFormState extends State<ContactForm> {
             SizedBox(
               height: 10,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () {
-                  _validateDataForm();
-                },
-                child: Text("ลงทะเบียนผู้ใช้งานใหม่"),
-                style: outlineCurveStyle,
-              ),
-            )
+            _submitButton,
           ],
         ),
       ),
@@ -78,14 +91,16 @@ class ContactFormState extends State<ContactForm> {
   void _validateDataForm() {
     if (!validationService.accountIsValid()) {
       validationService.setIndex(0);
+      _btnController.stop();
     } else if (!validationService.profileIsValid()) {
       validationService.setIndex(1);
+      _btnController.stop();
     } else if (validationService.contactIsValid()) {
       _onSubmitData();
     }
   }
 
-  void _onSubmitConfirm() {
+  /* void _onSubmitConfirm() {
     String msg = "สร้างรายชื่อผู้ใช้งานเรียบร้อย";
     Navigator.push(
       context,
@@ -96,7 +111,7 @@ class ContactFormState extends State<ContactForm> {
       content: Text("$msg"),
       duration: Duration(seconds: 5),
     ));
-  }
+  } */
 
   void _onSubmitData() {
     Map<String, dynamic> data = {
@@ -110,17 +125,33 @@ class ContactFormState extends State<ContactForm> {
       'address': validationService.address.value,
     };
 
+    /*
+    * Print all register state
+    */
     print(data);
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return CustomConfirmDialog(
-          title: "ดำเนินการสร้างบัญชีผู้ใช้",
-          subtitle: "กดปุ่ม ยืนยัน เพื่อดำเนินการต่อ",
-          onpress: () => _onSubmitConfirm(),
+    /*
+    * Register new user to firebase auth
+    */
+    _registerUserOnFirebase(validationService.email.value, validationService.password.value);
+  }
+
+  /*
+  * Register new user to firebase auth
+  */
+  void _registerUserOnFirebase(email, password) {
+    var authHandler = new Auth();
+    authHandler.handleSignUp(context, email, password).then((User user) {
+      if (user != null) {
+        _btnController.success();
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CompletedSignUp()),
         );
-      },
-    );
+      } else {
+        print("error");
+        _btnController.stop();
+      }
+    });
   }
 }
