@@ -1,6 +1,8 @@
 import 'package:base_project/class/auth.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
+import 'package:base_project/screens/signup/components/or_divider.dart';
+import 'package:base_project/screens/signup/components/social_icon.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:base_project/screens/login/components/background.dart';
@@ -125,6 +127,23 @@ class _BodyState extends State<Body> {
                   );
                 },
               ),
+              OrDivider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SocalIcon(
+                    iconSrc: "assets/icons/facebook.svg",
+                    press: () {},
+                  ),
+                  SocalIcon(
+                    iconSrc: "assets/icons/google-plus.svg",
+                    press: () {
+                      var authHandler = new Auth();
+                      authHandler.signInWithGoogle();
+                    },
+                  ),
+                ],
+              )
             ],
           ),
         ),
