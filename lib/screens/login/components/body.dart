@@ -4,6 +4,7 @@ import 'package:base_project/models/user_model.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:base_project/screens/signup/components/or_divider.dart';
 import 'package:base_project/screens/signup/components/social_icon.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:base_project/screens/login/components/background.dart';
@@ -29,15 +30,28 @@ class _BodyState extends State<Body> {
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
   /*
+  * If login success
+  * get and store user profile to model
+  */
+  Future _getCurrentUserProfile() async {
+    var users = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userModel.uid).get();
+    users.docs.forEach((element) {
+      userModel.setCurrentDocID(element.id);
+      userModel.setProfile(element.data());
+    });
+  }
+
+  /*
   * Login by Firebase auth using email & password
   */
-  void _signInWithEmailAndPassword(email, password) {
+  void _signInWithEmailAndPassword(email, password) async {
     var authHandler = new Auth();
 
-    authHandler.handleSignInEmail(context, email, password).then((User user) {
+    authHandler.handleSignInEmail(context, email, password).then((User user) async {
       if (user != null) {
         // * keep state to model
         userModel.setCurrentUserID(user.uid);
+        await _getCurrentUserProfile();
 
         Navigator.push(
           context,

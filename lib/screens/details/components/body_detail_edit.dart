@@ -1,8 +1,9 @@
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/components/text_field_container.dart';
 import 'package:base_project/constants.dart';
-import 'package:base_project/data/profile.dart';
+import 'package:base_project/models/user_model.dart';
 import 'package:base_project/validation/signup_validation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -16,7 +17,10 @@ class BodyDetailEdit extends StatefulWidget {
 }
 
 class _BodyDetailEditState extends State<BodyDetailEdit> {
+  UserModel userModel;
   SignupValidation validationService;
+
+  Map<String, dynamic> userData = {};
 
   // * mark text form field
   // * for phone number field
@@ -32,20 +36,42 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
 
   Size size;
   String _date = "Not set";
+  String firestoreDocID;
+
+  String genderValue;
+  var nameController = TextEditingController();
+  var lastnameContaller = TextEditingController();
+  var phoneController = TextEditingController();
+  var dobController = TextEditingController();
+  var addressController = TextEditingController();
 
   /*
-  * Initial Controller
+  * Query data form firestore
   */
-  String genderValue = profile['gender_eng'];
-  var nameController = TextEditingController(text: profile['firstname']);
-  var lastnameContaller = TextEditingController(text: profile['lastname']);
-  var phoneController = TextEditingController(text: profile['phone']);
-  var dobController = TextEditingController(text: profile['dob']);
-  var addressController = TextEditingController(text: profile['address']);
+  Future<Map> _getUserDetail() async {
+    var users = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userModel.uid).get();
+    users.docs.forEach((element) {
+      firestoreDocID = element.id;
+      userData = element.data();
+    });
+
+    return userData;
+  }
 
   @override
   void initState() {
     super.initState();
+    userModel = context.read<UserModel>();
+
+    /*
+    * Initial Controller
+    */
+    genderValue = userModel.profile['gender'];
+    nameController.text = userModel.profile['firstname'];
+    lastnameContaller.text = userModel.profile['lastname'];
+    phoneController.text = userModel.profile['phone'];
+    dobController.text = userModel.profile['dob'];
+    addressController.text = userModel.profile['address'];
   }
 
   @override
@@ -64,6 +90,30 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
 
     size = MediaQuery.of(context).size;
 
+    return FutureBuilder(
+      future: _getUserDetail(),
+      builder: (context, snap) {
+        if (snap.hasData) {
+          return _bodyDetailForm(context);
+        } else {
+          return Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+              ],
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  /*
+   * Main Widget
+   */
+  Widget _bodyDetailForm(BuildContext context) {
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       child: Padding(
@@ -95,7 +145,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              profile['gender'],
+                              userData['gender'] == 'male' ? 'ชาย' : 'หญิง',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -156,7 +206,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '${profile['firstname']} ${profile['lastname']}',
+                              '${userData['firstname']} ${userData['lastname']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -229,7 +279,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '${profile['phone']}',
+                              '${userData['phone']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -292,7 +342,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '${profile['dob']}',
+                              '${userData['dob']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -354,7 +404,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
                               style: TextStyle(color: kTextSecondaryColor),
                             ),
                             Text(
-                              '${profile['address']}',
+                              '${userData['address']}',
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style: TextStyle(color: kPrimaryColor),
@@ -509,12 +559,19 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   * Submit data
   */
   Future _onSubmit() async {
-    print("$genderValue");
-    print("${nameController.text}");
-    print("${lastnameContaller.text}");
-    print("${phoneController.text}");
-    print("${dobController.text}");
-    print("${addressController.text}");
+    Map<String, dynamic> data = {
+      'gender': genderValue,
+      'firstname': nameController.text,
+      'lastname': lastnameContaller.text,
+      'phone': phoneController.text,
+      'dob': dobController.text,
+      'address': addressController.text,
+    };
+
+    await FirebaseFirestore.instance.collection('users').doc(firestoreDocID).update(data).then((_) {
+      print('user data has been updated.');
+      userModel.setProfile(data);
+    });
 
     _btnController.success();
   }
