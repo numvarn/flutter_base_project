@@ -34,9 +34,7 @@ class _BodyState extends State<Body> {
   * get and store user profile to model
   */
   Future _getCurrentUserProfile() async {
-    var users = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userModel.uid).get();
-    users.docs.forEach((element) {
-      userModel.setCurrentDocID(element.id);
+    FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
       userModel.setProfile(element.data());
     });
   }
