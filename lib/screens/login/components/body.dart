@@ -1,5 +1,6 @@
 import 'package:base_project/class/firebaseAuth.dart';
 import 'package:base_project/constants.dart';
+import 'package:base_project/models/user_model.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:base_project/screens/signup/components/or_divider.dart';
 import 'package:base_project/screens/signup/components/social_icon.dart';
@@ -11,6 +12,7 @@ import 'package:base_project/components/already_have_an_account_acheck.dart';
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/components/rounded_password_field.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -22,6 +24,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  UserModel userModel;
+
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
   /*
@@ -32,6 +36,9 @@ class _BodyState extends State<Body> {
 
     authHandler.handleSignInEmail(context, email, password).then((User user) {
       if (user != null) {
+        // * keep state to model
+        userModel.setCurrentUserID(user.uid);
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
@@ -86,6 +93,12 @@ class _BodyState extends State<Body> {
     } else {
       return true;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    userModel = context.read<UserModel>();
   }
 
   @override

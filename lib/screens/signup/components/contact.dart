@@ -1,4 +1,5 @@
 import 'package:base_project/class/firebaseAuth.dart';
+import 'package:base_project/class/firebaseQuery.dart';
 import 'package:base_project/components/rounded_input_field.dart';
 import 'package:base_project/constants.dart';
 import 'package:base_project/screens/signup/components/completed_signup.dart';
@@ -100,19 +101,6 @@ class ContactFormState extends State<ContactForm> {
     }
   }
 
-  /* void _onSubmitConfirm() {
-    String msg = "สร้างรายชื่อผู้ใช้งานเรียบร้อย";
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CompletedSignUp()),
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("$msg"),
-      duration: Duration(seconds: 5),
-    ));
-  } */
-
   void _onSubmitData() {
     Map<String, dynamic> data = {
       'email': validationService.email.value,
@@ -133,17 +121,26 @@ class ContactFormState extends State<ContactForm> {
     /*
     * Register new user to firebase auth
     */
-    _registerUserOnFirebase(validationService.email.value, validationService.password.value);
+    _registerUserOnFirebase(data);
   }
 
   /*
   * Register new user to firebase auth
   */
-  void _registerUserOnFirebase(email, password) {
+  void _registerUserOnFirebase(userData) {
     var authHandler = new Auth();
-    authHandler.handleSignUp(context, email, password).then((User user) {
+    authHandler.handleSignUp(context, userData['email'], userData['password']).then((User user) {
       if (user != null) {
+        userData['uid'] = user.uid;
+
+        /*
+        * add user profile to docutment in users collection
+        */
+        FireStroeQuery fireStore = FireStroeQuery();
+        fireStore.addNewUsers(userData);
+
         _btnController.success();
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => CompletedSignUp()),
