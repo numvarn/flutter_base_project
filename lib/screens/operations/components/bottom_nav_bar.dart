@@ -1,9 +1,9 @@
-import 'package:base_project/constants.dart';
-import 'package:base_project/models/bottom_nav_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
+import '/constants.dart';
+import '/models/bottom_nav_model.dart';
 
 class BottomNavBar extends StatelessWidget {
   @override

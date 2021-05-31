@@ -1,9 +1,9 @@
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/models/photos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/constants.dart';
+import '/models/photos_model.dart';
 
 class PhotoViewBody extends StatefulWidget {
   const PhotoViewBody({Key key}) : super(key: key);

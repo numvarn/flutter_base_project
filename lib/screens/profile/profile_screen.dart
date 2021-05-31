@@ -1,5 +1,5 @@
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/constants.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/constants.dart';
 import 'package:flutter/material.dart';
 
 class PersonProfileScreen extends StatelessWidget {

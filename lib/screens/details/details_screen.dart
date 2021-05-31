@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'components/body_detail.dart';
 
 class DetailScreen extends StatelessWidget {

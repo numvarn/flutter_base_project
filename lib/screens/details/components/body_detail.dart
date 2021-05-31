@@ -1,9 +1,9 @@
-import 'package:base_project/components/dialog_confirm.dart';
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/data/image_network.dart';
-import 'package:base_project/screens/details/detail_edit_screen.dart';
 import 'package:flutter/material.dart';
+import '/components/dialog_confirm.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/constants.dart';
+import '/data/image_network.dart';
+import '/screens/details/detail_edit_screen.dart';
 
 class BodyDetail extends StatefulWidget {
   const BodyDetail({Key key}) : super(key: key);

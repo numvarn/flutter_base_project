@@ -1,13 +1,13 @@
-import 'package:base_project/screens/signup/components/account.dart';
-import 'package:base_project/screens/signup/components/background.dart';
-import 'package:base_project/screens/signup/components/contact.dart';
-import 'package:base_project/screens/signup/components/profile.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/validation/signup_validation.dart';
+import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/screens/signup/components/account.dart';
+import '/screens/signup/components/background.dart';
+import '/screens/signup/components/contact.dart';
+import '/screens/signup/components/profile.dart';
+import '/constants.dart';
+import '/validation/signup_validation.dart';
 
 class BodyStepper extends StatefulWidget {
   @override

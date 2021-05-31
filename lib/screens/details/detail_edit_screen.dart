@@ -1,6 +1,5 @@
-import 'package:base_project/constants.dart';
 import 'package:flutter/material.dart';
-
+import '/constants.dart';
 import 'components/body_detail_edit.dart';
 
 class DetailEditScreen extends StatelessWidget {

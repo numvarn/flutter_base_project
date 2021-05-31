@@ -1,14 +1,15 @@
-import 'package:base_project/class/firebaseAuth.dart';
-import 'package:base_project/class/firebaseQuery.dart';
-import 'package:base_project/components/rounded_input_field.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/screens/signup/components/completed_signup.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+
+import '/constants.dart';
+import '/class/firebaseAuth.dart';
+import '/class/firebaseQuery.dart';
+import '/components/rounded_input_field.dart';
+import '/screens/signup/components/completed_signup.dart';
+import '/validation/signup_validation.dart';
 
 class ContactForm extends StatefulWidget {
   @override

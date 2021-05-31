@@ -1,9 +1,9 @@
-import 'package:base_project/components/rounded_input_field.dart';
-import 'package:base_project/components/rounded_password_field.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/components/rounded_input_field.dart';
+import '/components/rounded_password_field.dart';
+import '/constants.dart';
+import '/validation/signup_validation.dart';
 
 class AccountForm extends StatefulWidget {
   const AccountForm({Key key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:base_project/validation/validation_item.dart';
+import '/validation/validation_item.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 

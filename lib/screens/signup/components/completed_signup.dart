@@ -1,10 +1,10 @@
-import 'package:base_project/screens/Login/login_screen.dart';
-import 'package:base_project/screens/signup/components/background.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import '/constants.dart';
+import '/screens/Login/login_screen.dart';
+import '/screens/signup/components/background.dart';
+import '/validation/signup_validation.dart';
 
 class CompletedSignUp extends StatelessWidget {
   @override

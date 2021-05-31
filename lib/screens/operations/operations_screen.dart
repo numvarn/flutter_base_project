@@ -1,10 +1,10 @@
-import 'package:base_project/components/drawer_nav.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/screens/operations/components/body_operations.dart';
-import 'package:base_project/screens/operations/components/bottom_nav_bar.dart';
-import 'package:base_project/screens/search/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '/components/drawer_nav.dart';
+import '/constants.dart';
+import '/screens/operations/components/body_operations.dart';
+import '/screens/operations/components/bottom_nav_bar.dart';
+import '/screens/search/search_screen.dart';
 
 class OperationScreen extends StatelessWidget {
   @override

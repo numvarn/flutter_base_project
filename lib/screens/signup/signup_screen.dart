@@ -1,8 +1,8 @@
-import 'package:base_project/constants.dart';
-import 'package:base_project/screens/signup/components/body_stepper.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/constants.dart';
+import '/screens/signup/components/body_stepper.dart';
+import '/validation/signup_validation.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override

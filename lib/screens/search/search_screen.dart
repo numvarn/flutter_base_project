@@ -1,6 +1,6 @@
-import 'package:base_project/components/rounded_input_field.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/data/country.dart';
+import '/components/rounded_input_field.dart';
+import '/constants.dart';
+import '/data/country.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {

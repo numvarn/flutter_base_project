@@ -1,8 +1,3 @@
-import 'package:base_project/components/rounded_input_field.dart';
-import 'package:base_project/components/text_field_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/models/user_model.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -10,6 +5,11 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:smart_select/smart_select.dart';
+import '/components/rounded_input_field.dart';
+import '/components/text_field_container.dart';
+import '/constants.dart';
+import '/models/user_model.dart';
+import '/validation/signup_validation.dart';
 
 class BodyDetailEdit extends StatefulWidget {
   @override

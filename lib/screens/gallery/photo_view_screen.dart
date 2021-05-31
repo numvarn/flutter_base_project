@@ -1,12 +1,12 @@
-import 'package:base_project/components/dialog_confirm.dart';
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/data/image_network.dart';
-import 'package:base_project/models/photos_model.dart';
-import 'package:base_project/screens/gallery/components/body_photo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import '/components/dialog_confirm.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/constants.dart';
+import '/data/image_network.dart';
+import '/models/photos_model.dart';
+import '/screens/gallery/components/body_photo_view.dart';
 
 class PhotoviewScreen extends StatelessWidget {
   const PhotoviewScreen({Key key}) : super(key: key);

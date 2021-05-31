@@ -1,13 +1,12 @@
-// ignore: unused_import
-import 'package:base_project/constants.dart';
-import 'package:base_project/models/bottom_nav_model.dart';
-import 'package:base_project/screens/details/details_screen.dart';
-import 'package:base_project/screens/gallery/gallery_screen.dart';
-import 'package:base_project/screens/home/home_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/constants.dart';
+import '/models/bottom_nav_model.dart';
+import '/screens/details/details_screen.dart';
+import '/screens/gallery/gallery_screen.dart';
+import '/screens/home/home_screen.dart';
 
 class BodyOperations extends StatefulWidget {
   const BodyOperations({Key key}) : super(key: key);

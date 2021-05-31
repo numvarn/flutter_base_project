@@ -1,11 +1,11 @@
-import 'package:base_project/components/rounded_input_field.dart';
-import 'package:base_project/components/text_field_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_select/smart_select.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import '/components/rounded_input_field.dart';
+import '/components/text_field_container.dart';
+import '/constants.dart';
+import '/validation/signup_validation.dart';
 
 class ProfileForm extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
-import 'package:base_project/constants.dart';
-import 'package:base_project/screens/upload_photos/components/body_upload.dart';
 import 'package:flutter/material.dart';
+import '/constants.dart';
+import '/screens/upload_photos/components/body_upload.dart';
 
 class UploadPhotos extends StatelessWidget {
   @override

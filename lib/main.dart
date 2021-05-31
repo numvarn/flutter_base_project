@@ -1,12 +1,12 @@
-import 'package:base_project/models/bottom_nav_model.dart';
-import 'package:base_project/models/photos_model.dart';
-import 'package:base_project/models/user_model.dart';
-import 'package:base_project/validation/signup_validation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:base_project/screens/welcome/welcome_screen.dart';
-import 'package:base_project/constants.dart';
 import 'package:provider/provider.dart';
+import 'constants.dart';
+import 'models/bottom_nav_model.dart';
+import 'models/photos_model.dart';
+import 'models/user_model.dart';
+import 'screens/welcome/welcome_screen.dart';
+import 'validation/signup_validation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

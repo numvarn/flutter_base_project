@@ -1,8 +1,7 @@
 import 'dart:async';
-
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/constants.dart';
-import 'package:base_project/data/image_network.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/constants.dart';
+import '/data/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
