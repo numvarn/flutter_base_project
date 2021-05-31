@@ -30,16 +30,6 @@ class _BodyState extends State<Body> {
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
   /*
-  * If login success
-  * get and store user profile to model
-  */
-  Future _getCurrentUserProfile() async {
-    FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
-      userModel.setProfile(element.data());
-    });
-  }
-
-  /*
   * Login by Firebase auth using email & password
   */
   void _signInWithEmailAndPassword(email, password) async {
@@ -49,7 +39,14 @@ class _BodyState extends State<Body> {
       if (user != null) {
         // * keep state to model
         userModel.setCurrentUserID(user.uid);
-        await _getCurrentUserProfile();
+
+        /*
+        * If login success
+        * get and store user profile to model
+        */
+        FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
+          userModel.setProfile(element.data());
+        });
 
         Navigator.push(
           context,
@@ -83,6 +80,18 @@ class _BodyState extends State<Body> {
     var authHandler = new Auth();
     authHandler.signInWithFacebook(context).then((Map userData) {
       if (userData != null) {
+        /*
+        * If facebook login success
+        * get and store user profile to model
+        */
+        userModel.setCurrentUserID(userData['id']);
+        FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
+          if (element.data() != null) {
+            print(element.data());
+          }
+          userModel.setProfile(userData);
+        });
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),

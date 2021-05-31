@@ -101,6 +101,9 @@ class Auth {
     return user;
   }
 
+  /*
+  * Log in with Facebook
+  */
   Future<Map<String, dynamic>> signInWithFacebook(BuildContext context) async {
     String message;
     Map<String, dynamic> userData;
@@ -109,6 +112,24 @@ class Auth {
     if (result.status == LoginStatus.success) {
       userData = await FacebookAuth.instance.getUserData();
       message = 'Log-in success';
+
+      try {
+        /*
+        * create new firebase auth user
+        * if email dose not exist
+        */
+        final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken.token);
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+        userData = {
+          'firstname': userCredential.additionalUserInfo.profile['first_name'],
+          'lastname': userCredential.additionalUserInfo.profile['last_name'],
+          'email': userCredential.additionalUserInfo.profile['email'],
+          'id': userCredential.additionalUserInfo.profile['id'],
+        };
+      } catch (e) {
+        print("This account is already exist with another provider");
+      }
     } else {
       message = 'can not login';
     }
@@ -119,6 +140,7 @@ class Auth {
         duration: Duration(seconds: 5),
       ),
     );
+
     return userData;
   }
 }

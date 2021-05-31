@@ -45,19 +45,6 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   var dobController = TextEditingController();
   var addressController = TextEditingController();
 
-  /*
-  * Query data form firestore
-  */
-  Future<Map> _getUserDetail() async {
-    var users = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userModel.uid).get();
-    users.docs.forEach((element) {
-      firestoreDocID = element.id;
-      userData = element.data();
-    });
-
-    return userData;
-  }
-
   @override
   void initState() {
     super.initState();
@@ -90,24 +77,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
 
     size = MediaQuery.of(context).size;
 
-    return FutureBuilder(
-      future: _getUserDetail(),
-      builder: (context, snap) {
-        if (snap.hasData) {
-          return _bodyDetailForm(context);
-        } else {
-          return Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-              ],
-            ),
-          );
-        }
-      },
-    );
+    return _bodyDetailForm(context);
   }
 
   /*
@@ -116,358 +86,360 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
   Widget _bodyDetailForm(BuildContext context) {
     return SingleChildScrollView(
       physics: AlwaysScrollableScrollPhysics(),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: boxMarginBottom,
-          bottom: 350,
-        ),
-        child: Center(
-          child: Container(
-            width: size.width * .9,
-            child: Column(
-              children: [
-                // * Gender
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      genderIsShow = !genderIsShow;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'เพศ',
-                              style: TextStyle(color: kTextSecondaryColor),
-                            ),
-                            Text(
-                              userData['gender'] == 'male' ? 'ชาย' : 'หญิง',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: TextStyle(color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            genderIsShow == false
-                                ? Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 14,
-                                    color: kTextSecondaryColor,
-                                  )
-                                : Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    size: 22,
-                                    color: kTextSecondaryColor,
-                                  ),
-                          ],
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  ),
-                ),
-                if (genderIsShow)
-                  Container(
-                    child: Column(
+      child: Consumer<UserModel>(builder: (context, userModel, child) {
+        return Padding(
+          padding: const EdgeInsets.only(
+            top: boxMarginBottom,
+            bottom: 350,
+          ),
+          child: Center(
+            child: Container(
+              width: size.width * .9,
+              child: Column(
+                children: [
+                  // * Gender
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        genderIsShow = !genderIsShow;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: _genderChoice(context),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'เพศ',
+                                style: TextStyle(color: kTextSecondaryColor),
+                              ),
+                              Text(
+                                userModel.profile['gender'] == 'male' ? 'ชาย' : 'หญิง',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: TextStyle(color: kPrimaryColor),
+                              ),
+                            ],
+                          ),
                         ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              genderIsShow == false
+                                  ? Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 14,
+                                      color: kTextSecondaryColor,
+                                    )
+                                  : Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 22,
+                                      color: kTextSecondaryColor,
+                                    ),
+                            ],
+                          ),
+                        ),
+                        Divider(),
                       ],
                     ),
                   ),
-                Divider(),
-                // * Firstname & Lastname
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      nameIsShow = !nameIsShow;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ชื่อ - สกุล',
-                              style: TextStyle(color: kTextSecondaryColor),
-                            ),
-                            Text(
-                              '${userData['firstname']} ${userData['lastname']}',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: TextStyle(color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
+                  if (genderIsShow)
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: _genderChoice(context),
+                          ),
+                        ],
                       ),
-                      nameIsShow == false
-                          ? Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 14,
-                              color: kTextSecondaryColor,
-                            )
-                          : Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 22,
-                              color: kTextSecondaryColor,
-                            ),
-                    ],
-                  ),
-                ),
-                if (nameIsShow)
-                  Container(
-                    child: Column(
+                    ),
+                  Divider(),
+                  // * Firstname & Lastname
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        nameIsShow = !nameIsShow;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: RoundedInputField(
-                            hintText: "ชื่อ",
-                            errorText: validationService.firstname.error,
-                            controller: nameController,
-                            icon: Icons.person_outline,
-                            onChanged: (value) {
-                              validationService.validateFirstName(value);
-                            },
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ชื่อ - สกุล',
+                                style: TextStyle(color: kTextSecondaryColor),
+                              ),
+                              Text(
+                                '${userModel.profile['firstname']} ${userModel.profile['lastname']}',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: TextStyle(color: kPrimaryColor),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RoundedInputField(
-                            hintText: "นามสกุล",
-                            errorText: validationService.lastname.error,
-                            controller: lastnameContaller,
-                            icon: Icons.person_outline,
-                            onChanged: (value) {
-                              validationService.validateLastName(value);
-                            },
-                          ),
-                        ),
+                        nameIsShow == false
+                            ? Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 14,
+                                color: kTextSecondaryColor,
+                              )
+                            : Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 22,
+                                color: kTextSecondaryColor,
+                              ),
                       ],
                     ),
                   ),
-                Divider(),
-                // * Phone
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      phoneIsShow = !phoneIsShow;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'เบอร์โทร',
-                              style: TextStyle(color: kTextSecondaryColor),
+                  if (nameIsShow)
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: RoundedInputField(
+                              hintText: "ชื่อ",
+                              errorText: validationService.firstname.error,
+                              controller: nameController,
+                              icon: Icons.person_outline,
+                              onChanged: (value) {
+                                validationService.validateFirstName(value);
+                              },
                             ),
-                            Text(
-                              '${userData['phone']}',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: TextStyle(color: kPrimaryColor),
+                          ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: RoundedInputField(
+                              hintText: "นามสกุล",
+                              errorText: validationService.lastname.error,
+                              controller: lastnameContaller,
+                              icon: Icons.person_outline,
+                              onChanged: (value) {
+                                validationService.validateLastName(value);
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      phoneIsShow == false
-                          ? Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 14,
-                              color: kTextSecondaryColor,
-                            )
-                          : Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 22,
-                              color: kTextSecondaryColor,
-                            ),
-                    ],
-                  ),
-                ),
-                if (phoneIsShow)
-                  Container(
-                    child: Column(
+                    ),
+                  Divider(),
+                  // * Phone
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        phoneIsShow = !phoneIsShow;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: RoundedInputField(
-                            hintText: "เบอร์โทรติดต่อ",
-                            errorText: validationService.phone.error,
-                            controller: phoneController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [maskPhoneFormatter],
-                            icon: Icons.phone_outlined,
-                            onChanged: (value) {
-                              validationService.validatePhone(value);
-                            },
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'เบอร์โทร',
+                                style: TextStyle(color: kTextSecondaryColor),
+                              ),
+                              Text(
+                                '${userModel.profile['phone']}',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: TextStyle(color: kPrimaryColor),
+                              ),
+                            ],
                           ),
                         ),
+                        phoneIsShow == false
+                            ? Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 14,
+                                color: kTextSecondaryColor,
+                              )
+                            : Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 22,
+                                color: kTextSecondaryColor,
+                              ),
                       ],
                     ),
                   ),
-                Divider(),
-                // * DOB
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      dobIsShow = !dobIsShow;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'วัน-เดือน-ปี เกิด',
-                              style: TextStyle(color: kTextSecondaryColor),
+                  if (phoneIsShow)
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: RoundedInputField(
+                              hintText: "เบอร์โทรติดต่อ",
+                              errorText: validationService.phone.error,
+                              controller: phoneController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [maskPhoneFormatter],
+                              icon: Icons.phone_outlined,
+                              onChanged: (value) {
+                                validationService.validatePhone(value);
+                              },
                             ),
-                            Text(
-                              '${userData['dob']}',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: TextStyle(color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      dobIsShow == false
-                          ? Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 14,
-                              color: kTextSecondaryColor,
-                            )
-                          : Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              size: 22,
-                              color: kTextSecondaryColor,
-                            ),
-                    ],
-                  ),
-                ),
-                if (dobIsShow)
-                  Container(
-                    child: Column(
+                    ),
+                  Divider(),
+                  // * DOB
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        dobIsShow = !dobIsShow;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: RoundedInputField(
-                            hintText: "วัน-เดือน-ปีเกิด",
-                            errorText: validationService.dob.error,
-                            controller: dobController,
-                            icon: Icons.calendar_today_outlined,
-                            onChanged: (dob) {
-                              validationService.validateDOB(dob);
-                            },
-                            onTab: () => _selectDateOfBirth(context),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'วัน-เดือน-ปี เกิด',
+                                style: TextStyle(color: kTextSecondaryColor),
+                              ),
+                              Text(
+                                '${userModel.profile['dob']}',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: TextStyle(color: kPrimaryColor),
+                              ),
+                            ],
                           ),
                         ),
+                        dobIsShow == false
+                            ? Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 14,
+                                color: kTextSecondaryColor,
+                              )
+                            : Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                size: 22,
+                                color: kTextSecondaryColor,
+                              ),
                       ],
                     ),
                   ),
-                Divider(),
-                // * Address
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      addressIsShow = !addressIsShow;
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'ที่อยู่ติดต่อ',
-                              style: TextStyle(color: kTextSecondaryColor),
+                  if (dobIsShow)
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: RoundedInputField(
+                              hintText: "วัน-เดือน-ปีเกิด",
+                              errorText: validationService.dob.error,
+                              controller: dobController,
+                              icon: Icons.calendar_today_outlined,
+                              onChanged: (dob) {
+                                validationService.validateDOB(dob);
+                              },
+                              onTab: () => _selectDateOfBirth(context),
                             ),
-                            Text(
-                              '${userData['address']}',
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: TextStyle(color: kPrimaryColor),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            addressIsShow == false
-                                ? Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 14,
-                                    color: kTextSecondaryColor,
-                                  )
-                                : Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    size: 22,
-                                    color: kTextSecondaryColor,
-                                  ),
-                          ],
-                        ),
-                      ),
-                      Divider(),
-                    ],
-                  ),
-                ),
-                if (addressIsShow)
-                  Container(
-                    child: Column(
+                    ),
+                  Divider(),
+                  // * Address
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        addressIsShow = !addressIsShow;
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: RoundedInputField(
-                            hintText: "ที่อยู่",
-                            minLines: 5,
-                            maxLines: 7,
-                            errorText: validationService.address.error,
-                            icon: Icons.home_outlined,
-                            controller: addressController,
-                            onChanged: (value) {
-                              validationService.validateAddress(value);
-                            },
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ที่อยู่ติดต่อ',
+                                style: TextStyle(color: kTextSecondaryColor),
+                              ),
+                              Text(
+                                '${userModel.profile['address']}',
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: false,
+                                style: TextStyle(color: kPrimaryColor),
+                              ),
+                            ],
                           ),
                         ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              addressIsShow == false
+                                  ? Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: 14,
+                                      color: kTextSecondaryColor,
+                                    )
+                                  : Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      size: 22,
+                                      color: kTextSecondaryColor,
+                                    ),
+                            ],
+                          ),
+                        ),
+                        Divider(),
                       ],
                     ),
                   ),
-                Divider(),
-                SizedBox(
-                  height: boxMarginBottom,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: _submitButton(context),
-                ),
-              ],
+                  if (addressIsShow)
+                    Container(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: RoundedInputField(
+                              hintText: "ที่อยู่",
+                              minLines: 5,
+                              maxLines: 7,
+                              errorText: validationService.address.error,
+                              icon: Icons.home_outlined,
+                              controller: addressController,
+                              onChanged: (value) {
+                                validationService.validateAddress(value);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  Divider(),
+                  SizedBox(
+                    height: boxMarginBottom,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: _submitButton(context),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -568,7 +540,7 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
       'address': addressController.text,
     };
 
-    await FirebaseFirestore.instance.collection('users').doc(firestoreDocID).update(data).then((_) {
+    await FirebaseFirestore.instance.collection('users').doc(userModel.uid).update(data).then((_) {
       print('user data has been updated.');
       userModel.setProfile(data);
     });

@@ -18,4 +18,9 @@ class UserModel extends ChangeNotifier {
     _profile = profile;
     notifyListeners();
   }
+
+  void clear() {
+    _uid = '';
+    _profile.clear();
+  }
 }
