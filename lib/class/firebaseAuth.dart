@@ -78,8 +78,8 @@ class Auth {
       );
 
       UserCredential result = await FirebaseAuth.instance.signInWithCredential(credential);
-
       user = result.user;
+
       message = 'Now, you log in on ${user.displayName}';
     } on PlatformException catch (e) {
       if (e.code == 'sign_in_canceled') {

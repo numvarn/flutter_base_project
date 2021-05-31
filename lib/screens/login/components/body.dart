@@ -65,7 +65,26 @@ class _BodyState extends State<Body> {
     var authHandler = new Auth();
     authHandler.signInWithGoogle(context).then((User user) {
       if (user != null) {
-        print(user);
+        /*
+        * If Google login success
+        * get and store user profile to model
+        */
+        userModel.setCurrentUserID(user.uid);
+        FirebaseFirestore.instance.collection('users').doc(user.email).get().then((element) {
+          if (element.data() != null) {
+            userModel.setProfile(element.data());
+          } else {
+            // * if user profile not already create.
+            Map<String, dynamic> userData = {
+              'email': user.email,
+              'fistname': user.displayName,
+            };
+            print(user);
+            userModel.setProfile(userData);
+            userModel.setHasProfile(false);
+          }
+        });
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
