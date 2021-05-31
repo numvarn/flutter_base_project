@@ -544,13 +544,13 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     if (userModel.hasProfile) {
       // * update profile in firestore
-      users.doc(userModel.uid).update(data).then((_) {
+      users.doc(userModel.profile['email']).update(data).then((_) {
         print('user data has been updated.');
         userModel.setProfile(data);
       });
     } else {
       // * create new profile in firestore
-      users.doc(userModel.uid).set(data).then((_) {
+      users.doc(userModel.profile['email']).set(data).then((_) {
         userModel.setHasProfile(true);
         userModel.setProfile(data);
         print('user data has been created.');

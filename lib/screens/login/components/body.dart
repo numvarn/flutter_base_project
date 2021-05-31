@@ -44,7 +44,7 @@ class _BodyState extends State<Body> {
         * If login success
         * get and store user profile to model
         */
-        FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
+        FirebaseFirestore.instance.collection('users').doc(email).get().then((element) {
           userModel.setProfile(element.data());
         });
 
@@ -65,6 +65,7 @@ class _BodyState extends State<Body> {
     var authHandler = new Auth();
     authHandler.signInWithGoogle(context).then((User user) {
       if (user != null) {
+        print(user);
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
@@ -85,7 +86,7 @@ class _BodyState extends State<Body> {
         * get and store user profile to model
         */
         userModel.setCurrentUserID(userData['id']);
-        FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
+        FirebaseFirestore.instance.collection('users').doc(userData['email']).get().then((element) {
           if (element.data() != null) {
             /*
             * if current user already has profile

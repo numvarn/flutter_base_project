@@ -7,6 +7,6 @@ class FireStroeQuery {
   */
   Future<void> addNewUsers(Map userData) async {
     CollectionReference users = _firestore.collection('users');
-    return users.doc(userData['uid']).set(userData);
+    return users.doc(userData['email']).set(userData);
   }
 }

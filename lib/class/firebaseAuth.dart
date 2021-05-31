@@ -120,7 +120,7 @@ class Auth {
         */
         final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken.token);
         UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-        print(userCredential);
+
         userData = {
           'firstname': userCredential.additionalUserInfo.profile['first_name'],
           'lastname': userCredential.additionalUserInfo.profile['last_name'],
