@@ -540,10 +540,20 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
       'address': addressController.text,
     };
 
-    await FirebaseFirestore.instance.collection('users').doc(userModel.uid).update(data).then((_) {
-      print('user data has been updated.');
-      userModel.setProfile(data);
-    });
+    if (userModel.hasProfile) {
+      // * update data in firestore
+      await FirebaseFirestore.instance.collection('users').doc(userModel.uid).update(data).then((_) {
+        print('user data has been updated.');
+        userModel.setProfile(data);
+      });
+    } else {
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      users.doc(userModel.uid).set(data).then((_) {
+        userModel.setHasProfile(true);
+        userModel.setProfile(data);
+        print('user data has been updated.');
+      });
+    }
 
     _btnController.success();
   }

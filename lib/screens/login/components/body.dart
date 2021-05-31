@@ -87,10 +87,16 @@ class _BodyState extends State<Body> {
         userModel.setCurrentUserID(userData['id']);
         FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
           if (element.data() != null) {
-            print(element.data());
+            userData['gender'] = element.data()['gender'];
+            userData['phone'] = element.data()['phone'];
+            userData['address'] = element.data()['address'];
+            userData['dob'] = element.data()['dob'];
+          } else {
+            userModel.setHasProfile(false);
           }
-          userModel.setProfile(userData);
         });
+
+        userModel.setProfile(userData);
 
         Navigator.push(
           context,
