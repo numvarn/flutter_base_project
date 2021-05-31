@@ -538,20 +538,22 @@ class _BodyDetailEditState extends State<BodyDetailEdit> {
       'phone': phoneController.text,
       'dob': dobController.text,
       'address': addressController.text,
+      'email': userModel.profile['email'],
     };
 
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     if (userModel.hasProfile) {
-      // * update data in firestore
-      await FirebaseFirestore.instance.collection('users').doc(userModel.uid).update(data).then((_) {
+      // * update profile in firestore
+      users.doc(userModel.uid).update(data).then((_) {
         print('user data has been updated.');
         userModel.setProfile(data);
       });
     } else {
-      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      // * create new profile in firestore
       users.doc(userModel.uid).set(data).then((_) {
         userModel.setHasProfile(true);
         userModel.setProfile(data);
-        print('user data has been updated.');
+        print('user data has been created.');
       });
     }
 

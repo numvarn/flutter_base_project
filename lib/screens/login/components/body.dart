@@ -87,15 +87,23 @@ class _BodyState extends State<Body> {
         userModel.setCurrentUserID(userData['id']);
         FirebaseFirestore.instance.collection('users').doc(userModel.uid).get().then((element) {
           if (element.data() != null) {
+            /*
+            * if current user already has profile
+            * get profile from firestore and set state to user model
+            */
+            userData['firstname'] = element.data()['firstname'];
+            userData['lastname'] = element.data()['lastname'];
             userData['gender'] = element.data()['gender'];
             userData['phone'] = element.data()['phone'];
             userData['address'] = element.data()['address'];
             userData['dob'] = element.data()['dob'];
           } else {
+            // * if user profile not already create.
             userModel.setHasProfile(false);
           }
         });
 
+        // * keep current user profile to state
         userModel.setProfile(userData);
 
         Navigator.push(
