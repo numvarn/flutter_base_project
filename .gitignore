@@ -41,3 +41,7 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# Credential
+/ios/Runner/GoogleService-Info.plist
+/android/app/google-services.json
