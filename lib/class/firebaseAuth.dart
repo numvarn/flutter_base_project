@@ -129,7 +129,6 @@ class Auth {
         };
       } catch (e) {
         print("This account is already exist with another provider");
-        print(userData);
       }
     } else {
       message = 'can not login';

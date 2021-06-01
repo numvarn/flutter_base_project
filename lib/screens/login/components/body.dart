@@ -1,8 +1,11 @@
+import 'package:base_project/models/images_model.dart';
+import 'package:base_project/models/photos_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '/constants.dart';
 import '/class/firebaseAuth.dart';
@@ -27,8 +30,36 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   UserModel userModel;
+  ImageModel imageModel;
+  PhotosModel photosModel;
 
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
+
+  /*
+  *
+  */
+  Future<void> _getUserImages() async {
+    FirebaseFirestore.instance.collection('images').where('user', isEqualTo: userModel.profile['email']).get().then((value) {
+      List<Map<String, dynamic>> images = [];
+      List<String> links = [];
+      value.docs.forEach((element) {
+        images.add(element.data());
+        // * get image download link
+        firebase_storage.FirebaseStorage.instance.ref(element.data()['image']).getDownloadURL().then((link) {
+          if (link != null) {
+            links.add(link);
+          }
+        });
+      });
+
+      photosModel.setLink(links);
+      imageModel.setImages(images);
+    });
+  }
+
+  Future<void> _getUserData() async {
+    await _getUserImages();
+  }
 
   /*
   * Login by Firebase auth using email & password
@@ -49,6 +80,9 @@ class _BodyState extends State<Body> {
           userModel.setProfile(element.data());
         });
 
+        // * get user data after login
+        await _getUserData();
+
         Navigator.push(
           context,
           new MaterialPageRoute(builder: (context) => new OperationScreen()),
@@ -64,7 +98,7 @@ class _BodyState extends State<Body> {
   */
   void _googleSignIn(BuildContext context) {
     var authHandler = new Auth();
-    authHandler.signInWithGoogle(context).then((User user) {
+    authHandler.signInWithGoogle(context).then((User user) async {
       if (user != null) {
         /*
         * If Google login success
@@ -80,11 +114,14 @@ class _BodyState extends State<Body> {
               'email': user.email,
               'fistname': user.displayName,
             };
-            print(user);
+
             userModel.setProfile(userData);
             userModel.setHasProfile(false);
           }
         });
+
+        // * get user data after login
+        await _getUserData();
 
         Navigator.push(
           context,
@@ -99,7 +136,7 @@ class _BodyState extends State<Body> {
   */
   void _facebookSignIn(BuildContext context) {
     var authHandler = new Auth();
-    authHandler.signInWithFacebook(context).then((Map userData) {
+    authHandler.signInWithFacebook(context).then((Map userData) async {
       if (userData != null) {
         /*
         * If facebook login success
@@ -126,6 +163,9 @@ class _BodyState extends State<Body> {
 
         // * keep current user profile to state
         userModel.setProfile(userData);
+
+        // * get user data after login
+        await _getUserData();
 
         Navigator.push(
           context,
@@ -155,6 +195,8 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     userModel = context.read<UserModel>();
+    imageModel = context.read<ImageModel>();
+    photosModel = context.read<PhotosModel>();
   }
 
   @override

@@ -1,4 +1,5 @@
 import 'package:base_project/constants.dart';
+import 'package:base_project/models/images_model.dart';
 import 'package:base_project/models/user_model.dart';
 import 'package:base_project/screens/operations/operations_screen.dart';
 import 'package:base_project/screens/welcome/welcome_screen.dart';
@@ -22,8 +23,8 @@ class _DrawerNavigatorState extends State<DrawerNavigator> {
 
     return Drawer(
       child: Container(
-        child: Consumer<UserModel>(
-          builder: (context, userModel, child) => Column(
+        child: Consumer2<UserModel, ImageModel>(
+          builder: (context, userModel, imageModel, child) => Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
@@ -77,6 +78,7 @@ class _DrawerNavigatorState extends State<DrawerNavigator> {
                       ),
                       onTap: () {
                         userModel.clear();
+                        imageModel.clear();
                         Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
                       },
                     ),

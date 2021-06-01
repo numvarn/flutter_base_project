@@ -1,3 +1,4 @@
+import 'package:base_project/models/images_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<BottomNavModel>(create: (_) => BottomNavModel()),
         ChangeNotifierProvider<PhotosModel>(create: (_) => PhotosModel()),
         ChangeNotifierProvider<UserModel>(create: (_) => UserModel()),
+        ChangeNotifierProvider<ImageModel>(create: (_) => ImageModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

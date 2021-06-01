@@ -1,3 +1,4 @@
+import 'package:base_project/models/images_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +19,19 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
   @override
   bool get wantKeepAlive => true;
 
+  PhotosModel photosModel;
+  ImageModel imageModel;
+
   Future<void> _onRefresh() async {
     await new Future.delayed(new Duration(seconds: 1));
     print("Refresh");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    photosModel = context.read<PhotosModel>();
+    imageModel = context.read<ImageModel>();
   }
 
   @override
@@ -65,8 +76,8 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
               SizedBox(
                 height: 10,
               ),
-              Consumer<PhotosModel>(
-                builder: (context, photosModel, child) {
+              Consumer2<PhotosModel, ImageModel>(
+                builder: (context, photosModel, imageModel, child) {
                   return Flexible(
                     fit: FlexFit.tight,
                     child: StaggeredGridView.countBuilder(
@@ -75,7 +86,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                       crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 8 : 4,
                       mainAxisSpacing: 6.0,
                       crossAxisSpacing: 6.0,
-                      itemCount: galleryList.length,
+                      itemCount: imageModel.length,
                       staggeredTileBuilder: (int index) => new StaggeredTile.count(2, index.isEven ? 2 : 2),
                       itemBuilder: (BuildContext context, index) {
                         return InkWell(
@@ -87,7 +98,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                             ),
                             elevation: 2,
                             child: CachedImageGalleryContainer(
-                              imgUrl: "${galleryList[index]}",
+                              imgUrl: photosModel.imgLinks[index],
                             ),
                           ),
                           onTap: () {

@@ -1,12 +1,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:base_project/models/images_model.dart';
+import 'package:base_project/models/photos_model.dart';
+import 'package:base_project/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
+import 'package:provider/provider.dart';
 
 import '/constants.dart';
 import '/components/dialog_confirm.dart';
@@ -26,6 +31,11 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   final int maxImageLimit = 3;
   bool isSelectedImage = false;
 
+  // * get user model
+  UserModel userModel;
+  ImageModel imageModel;
+  PhotosModel photosModel;
+
   /*
   * List image for preview only, dynamic type.
   */
@@ -39,6 +49,9 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   @override
   void initState() {
     super.initState();
+    userModel = context.read<UserModel>();
+    imageModel = context.read<ImageModel>();
+    photosModel = context.read<PhotosModel>();
 
     /*
     * Add uploaded image to preview list
@@ -329,6 +342,8 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
    */
   Future<void> _uploadProcess(List<Asset> listImageForUpload) async {
     Uuid uuid = Uuid();
+    List<Map<String, dynamic>> uploaded = [];
+    List<String> links = [];
 
     for (Asset asset in listImageForUpload) {
       try {
@@ -340,18 +355,39 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
         String newName = "${uuid.v1()}.$ext";
 
         // * upload image to firebase storage
-        await firebase_storage.FirebaseStorage.instance.ref().child('images/$newName').putFile(
+        await firebase_storage.FirebaseStorage.instance
+            .ref()
+            .child('images/$newName')
+            .putFile(
               file,
               firebase_storage.SettableMetadata(contentType: 'image/$ext'),
-            );
+            )
+            .then((_) async {
+          print("upload suceessed");
+        });
 
-        // * if upload success get download url
-        String downloadURL = await firebase_storage.FirebaseStorage.instance.ref('images/$newName').getDownloadURL();
-        print(downloadURL);
+        // * if upload success
+        Map<String, dynamic> data = {
+          'user': userModel.profile['email'],
+          'image': 'images/$newName',
+        };
+        uploaded.add(data);
       } catch (e) {
         print(e.toString());
       }
     }
+
+    /*
+    * Add data to firestore
+    */
+    for (var item in uploaded) {
+      FirebaseFirestore.instance.collection('images').add(item);
+      // * get image download link
+      await firebase_storage.FirebaseStorage.instance.ref('${item['image']}').getDownloadURL().then((value) => links.add(value));
+    }
+    // * add new images to image model
+    imageModel.addImages(uploaded);
+    photosModel.addLink(links);
   }
 
   /*
