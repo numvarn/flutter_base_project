@@ -4,7 +4,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import '/components/img_cached_gallery_container.dart';
 import '/constants.dart';
-import '/data/image_network.dart';
 import '/models/photos_model.dart';
 import '/screens/gallery/photo_view_screen.dart';
 import '/screens/upload_photos/upload_photo_screen.dart';
@@ -86,7 +85,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                       crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 8 : 4,
                       mainAxisSpacing: 6.0,
                       crossAxisSpacing: 6.0,
-                      itemCount: imageModel.length,
+                      itemCount: photosModel.imgLinksLength,
                       staggeredTileBuilder: (int index) => new StaggeredTile.count(2, index.isEven ? 2 : 2),
                       itemBuilder: (BuildContext context, index) {
                         return InkWell(
@@ -98,11 +97,11 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                             ),
                             elevation: 2,
                             child: CachedImageGalleryContainer(
-                              imgUrl: photosModel.imgLinks[index],
+                              imgUrl: photosModel.imgLinks[index] ?? "",
                             ),
                           ),
                           onTap: () {
-                            photosModel.setImgUrl(galleryList[index]);
+                            photosModel.setImgUrl(photosModel.imgLinks[index] ?? "");
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PhotoviewScreen()),

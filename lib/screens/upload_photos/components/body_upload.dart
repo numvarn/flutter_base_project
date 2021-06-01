@@ -25,6 +25,8 @@ class BodyUploadPhotos extends StatefulWidget {
 }
 
 class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
+  // * create FirebaseStorage instance
+  firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   /*
   * Multiple select photo argument.
   */
@@ -355,7 +357,7 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
         String newName = "${uuid.v1()}.$ext";
 
         // * upload image to firebase storage
-        await firebase_storage.FirebaseStorage.instance
+        await storage
             .ref()
             .child('images/$newName')
             .putFile(
@@ -383,11 +385,13 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     for (var item in uploaded) {
       FirebaseFirestore.instance.collection('images').add(item);
       // * get image download link
-      await firebase_storage.FirebaseStorage.instance.ref('${item['image']}').getDownloadURL().then((value) => links.add(value));
+      await storage.ref('${item['image']}').getDownloadURL().then((value) => links.add(value));
     }
     // * add new images to image model
     imageModel.addImages(uploaded);
-    photosModel.addLink(links);
+    photosModel.appendLinks(links);
+
+    Navigator.pop(context);
   }
 
   /*

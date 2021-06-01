@@ -6,6 +6,7 @@ class PhotosModel extends ChangeNotifier {
 
   get imgUrl => _imgUrl;
   get imgLinks => _imgLinks;
+  get imgLinksLength => _imgLinks.length;
 
   void setImgUrl(String imgUrl) {
     _imgUrl = imgUrl;
@@ -17,7 +18,7 @@ class PhotosModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addLink(List<String> imgLinks) {
+  void appendLinks(List<String> imgLinks) {
     _imgLinks.addAll(imgLinks);
     notifyListeners();
   }

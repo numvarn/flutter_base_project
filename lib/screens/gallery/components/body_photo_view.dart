@@ -13,7 +13,6 @@ class PhotoViewBody extends StatefulWidget {
 
 class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveClientMixin<PhotoViewBody> {
   Size size;
-  List<String> filename = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -32,7 +31,6 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
     return Container(
       child: Consumer<PhotosModel>(
         builder: (context, photosModel, child) {
-          filename = photosModel.imgUrl.split(".");
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +149,7 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
                       style: descTextStyle,
                     ),
                     Text(
-                      '${filename[filename.length - 1].toUpperCase()}',
+                      'jpg',
                     ),
                   ],
                 ),

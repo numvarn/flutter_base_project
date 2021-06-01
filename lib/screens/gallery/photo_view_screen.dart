@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+
 import '/components/dialog_confirm.dart';
 import '/components/img_cached_gallery_container.dart';
 import '/constants.dart';
-import '/data/image_network.dart';
 import '/models/photos_model.dart';
 import '/screens/gallery/components/body_photo_view.dart';
 
@@ -99,7 +99,7 @@ class PhotoviewScreen extends StatelessWidget {
                           height: 70,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: List.generate(galleryList.length, (index) {
+                            children: List.generate(photosModel.imgLinksLength, (index) {
                               return Container(
                                 width: 80,
                                 // color: Colors.purple[600],
@@ -108,12 +108,12 @@ class PhotoviewScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(200.0),
                                     child: InkWell(
                                       child: CachedImageGalleryContainer(
-                                        imgUrl: galleryList[index],
+                                        imgUrl: photosModel.imgLinks[index] ?? "",
                                         height: 70,
                                         width: 70,
                                       ),
                                       onTap: () {
-                                        photosModel.setImgUrl(galleryList[index]);
+                                        photosModel.setImgUrl(photosModel.imgLinks[index]);
                                       },
                                     ),
                                   ),
