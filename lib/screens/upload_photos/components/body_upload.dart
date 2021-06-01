@@ -1,10 +1,18 @@
-import 'package:base_project/components/dialog_confirm.dart';
-import 'package:base_project/components/img_cached_gallery_container.dart';
-import 'package:base_project/components/select_photo_container.dart';
-import 'package:base_project/data/image_network.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
-import 'package:base_project/constants.dart';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
+
+import '/constants.dart';
+import '/components/dialog_confirm.dart';
+import '/components/img_cached_gallery_container.dart';
+import '/components/select_photo_container.dart';
+import '/data/image_network.dart';
 
 class BodyUploadPhotos extends StatefulWidget {
   @override
@@ -278,7 +286,7 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
                                 subtitle: "ต้องการดำเนินการต่อกรุณากดปุ่มยืนยัน",
                                 onpress: () {
                                   print("Uploading");
-                                  // _uploadProcess(listImageForUpload);
+                                  _uploadProcess(listImagesForUpload);
                                   Navigator.pop(context);
                                 },
                               );
@@ -319,61 +327,41 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   /*
    * Upload Image process 
    */
-  /*
-  // For upload data by using MultipathRequest
-  Future<Null> _uploadProcess({@required List<Asset> listImageForUpload, @required int productId}) async {
-    // get current user token
-    String token = settingModel.value['token'];
-
-    // string to uri
-    Uri uri = Uri.parse('${settingModel.baseURL}/${settingModel.endPointUploadProductImage}');
-
-    // create multipart request
-    MultipartRequest request = MultipartRequest("POST", uri);
+  Future<void> _uploadProcess(List<Asset> listImageForUpload) async {
+    Uuid uuid = Uuid();
 
     for (Asset asset in listImageForUpload) {
-      ByteData byteData = await asset.getByteData(quality: 30);
-      List<int> imageData = byteData.buffer.asUint8List();
+      try {
+        ByteData byteData = await asset.getByteData(quality: 30);
+        File file = await writeToFile(byteData);
 
-      MultipartFile multipartFile = MultipartFile.fromBytes(
-        'image',
-        imageData,
-        filename: 'image.jpg',
-      );
+        // * rename file
+        var ext = path.extension(asset.name).toLowerCase().substring(1);
+        String newName = "${uuid.v1()}.$ext";
 
-      // add access token to header
-      request.headers['authorization'] = "Token $token";
+        // * upload image to firebase storage
+        await firebase_storage.FirebaseStorage.instance.ref().child('images/$newName').putFile(
+              file,
+              firebase_storage.SettableMetadata(contentType: 'image/$ext'),
+            );
 
-      // add file to multipart
-      request.files.add(multipartFile);
-    }
-
-    //adding params Product ID
-    request.fields['product'] = "$productId";
-
-    // Upload photo and wait for response
-    try {
-      pr.show();
-      Response response = await Response.fromStream(await request.send());
-      var jsonData = jsonDecode(utf8.decode(response.bodyBytes));
-
-      if (jsonData['status']) {
-        pr.hide();
-        productImageModel.addImage(listImage: jsonData['data']);
-        showFlashBar(context, message: 'อัพโหลดรูปภาพสำเร็จ', success: true);
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ViewProductScreen(productId: productId),
-          ),
-        );
+        // * if upload success get download url
+        String downloadURL = await firebase_storage.FirebaseStorage.instance.ref('images/$newName').getDownloadURL();
+        print(downloadURL);
+      } catch (e) {
+        print(e.toString());
       }
-    } catch (e) {
-      showFlashBar(context, message: 'เกิดข้อผิดพลาดบางอย่าง', error: true);
-      pr.hide();
-      print(e.toString());
     }
   }
+
+  /*
+  * Convert Asset class to File
   */
+  Future<File> writeToFile(ByteData data) async {
+    final buffer = data.buffer;
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+    var filePath = tempPath + '/file.tmp';
+    return new File(filePath).writeAsBytes(buffer.asInt8List(data.offsetInBytes, data.lengthInBytes));
+  }
 }

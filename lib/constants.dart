@@ -113,7 +113,7 @@ final ButtonStyle outlineButtonWideStyle = OutlinedButton.styleFrom(
   side: BorderSide(color: kPrimaryLightColor, width: 1),
   padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
   shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(2)),
+    borderRadius: BorderRadius.all(Radius.circular(10)),
   ),
 );
 
