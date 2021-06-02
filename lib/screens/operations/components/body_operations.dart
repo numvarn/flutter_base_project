@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '/models/images_model.dart';
-import '/models/photos_model.dart';
 import '/models/user_model.dart';
 import '/constants.dart';
 import '/models/bottom_nav_model.dart';
@@ -24,7 +23,6 @@ class BodyOperations extends StatefulWidget {
 class _BodyOperationsState extends State<BodyOperations> {
   UserModel userModel;
   ImageModel imageModel;
-  PhotosModel photosModel;
 
   Size size;
   final PageController controller = PageController(initialPage: 0);
@@ -34,7 +32,6 @@ class _BodyOperationsState extends State<BodyOperations> {
     super.initState();
     userModel = context.read<UserModel>();
     imageModel = context.read<ImageModel>();
-    photosModel = context.read<PhotosModel>();
   }
 
   /*
@@ -54,7 +51,6 @@ class _BodyOperationsState extends State<BodyOperations> {
         });
       });
 
-      photosModel.setLink(links);
       imageModel.setImages(images);
     });
 

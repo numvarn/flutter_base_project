@@ -1,9 +1,9 @@
+import 'package:base_project/models/images_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '/components/img_cached_gallery_container.dart';
 import '/constants.dart';
-import '/models/photos_model.dart';
 
 class PhotoViewBody extends StatefulWidget {
   const PhotoViewBody({Key key}) : super(key: key);
@@ -29,8 +29,8 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
     final String dateFormatted = formatter.format(now);
 
     return Container(
-      child: Consumer<PhotosModel>(
-        builder: (context, photosModel, child) {
+      child: Consumer<ImageModel>(
+        builder: (context, imageModel, child) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
              * Header Image
              */
               CachedImageGalleryContainer(
-                imgUrl: photosModel.imgUrl,
+                imgUrl: imageModel.images[imageModel.showIndex]['link'],
                 height: size.height * .5,
               ),
               Container(
@@ -77,7 +77,7 @@ class _PhotoViewBodyState extends State<PhotoViewBody> with AutomaticKeepAliveCl
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(200.0),
                       child: CachedImageGalleryContainer(
-                        imgUrl: photosModel.imgUrl,
+                        imgUrl: imageModel.images[imageModel.showIndex]['link'],
                         height: 60,
                         width: 60,
                       ),

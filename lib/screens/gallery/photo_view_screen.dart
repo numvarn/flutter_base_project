@@ -1,3 +1,4 @@
+import 'package:base_project/models/images_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -5,7 +6,6 @@ import 'package:share/share.dart';
 import '/components/dialog_confirm.dart';
 import '/components/img_cached_gallery_container.dart';
 import '/constants.dart';
-import '/models/photos_model.dart';
 import '/screens/gallery/components/body_photo_view.dart';
 
 class PhotoviewScreen extends StatelessWidget {
@@ -79,8 +79,8 @@ class PhotoviewScreen extends StatelessWidget {
         builder: (ctx) {
           return Container(
             height: MediaQuery.of(context).size.height * 0.2,
-            child: Consumer<PhotosModel>(
-              builder: (context, photosModel, child) => Center(
+            child: Consumer<ImageModel>(
+              builder: (context, imageModel, child) => Center(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
@@ -99,7 +99,7 @@ class PhotoviewScreen extends StatelessWidget {
                           height: 70,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: List.generate(photosModel.imgLinksLength, (index) {
+                            children: List.generate(imageModel.length, (index) {
                               return Container(
                                 width: 80,
                                 // color: Colors.purple[600],
@@ -108,12 +108,12 @@ class PhotoviewScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(200.0),
                                     child: InkWell(
                                       child: CachedImageGalleryContainer(
-                                        imgUrl: photosModel.imgLinks[index] ?? "",
+                                        imgUrl: imageModel.images[index]['link'] ?? "",
                                         height: 70,
                                         width: 70,
                                       ),
                                       onTap: () {
-                                        photosModel.setImgUrl(photosModel.imgLinks[index]);
+                                        imageModel.setShowIndex(index);
                                       },
                                     ),
                                   ),

@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '/models/images_model.dart';
-import '/models/photos_model.dart';
 import '/models/user_model.dart';
 
 import '/constants.dart';
@@ -31,7 +30,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   UserModel userModel;
   ImageModel imageModel;
-  PhotosModel photosModel;
 
   final RoundedLoadingButtonController _btnController = RoundedLoadingButtonController();
 
@@ -161,7 +159,6 @@ class _BodyState extends State<Body> {
     super.initState();
     userModel = context.read<UserModel>();
     imageModel = context.read<ImageModel>();
-    photosModel = context.read<PhotosModel>();
   }
 
   @override

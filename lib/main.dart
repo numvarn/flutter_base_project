@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'constants.dart';
 import 'models/images_model.dart';
 import 'models/bottom_nav_model.dart';
-import 'models/photos_model.dart';
 import 'models/user_model.dart';
 import 'screens/welcome/welcome_screen.dart';
 import 'validation/signup_validation.dart';
@@ -55,7 +54,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider<SignupValidation>(create: (_) => SignupValidation()),
         ChangeNotifierProvider<BottomNavModel>(create: (_) => BottomNavModel()),
-        ChangeNotifierProvider<PhotosModel>(create: (_) => PhotosModel()),
         ChangeNotifierProvider<UserModel>(create: (_) => UserModel()),
         ChangeNotifierProvider<ImageModel>(create: (_) => ImageModel()),
       ],

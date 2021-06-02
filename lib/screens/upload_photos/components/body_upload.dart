@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:base_project/models/images_model.dart';
-import 'package:base_project/models/photos_model.dart';
 import 'package:base_project/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,6 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   // * get user model
   UserModel userModel;
   ImageModel imageModel;
-  PhotosModel photosModel;
 
   /*
   * List image for preview only, dynamic type.
@@ -53,7 +51,6 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     super.initState();
     userModel = context.read<UserModel>();
     imageModel = context.read<ImageModel>();
-    photosModel = context.read<PhotosModel>();
 
     /*
     * Add uploaded image to preview list
@@ -345,7 +342,6 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
   Future<void> _uploadProcess(List<Asset> listImageForUpload) async {
     Uuid uuid = Uuid();
     List<Map<String, dynamic>> uploaded = [];
-    List<String> links = [];
 
     for (Asset asset in listImageForUpload) {
       try {
@@ -366,14 +362,20 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
             )
             .then((_) async {
           print("upload suceessed");
-        });
 
-        // * if upload success
-        Map<String, dynamic> data = {
-          'user': userModel.profile['email'],
-          'image': 'images/$newName',
-        };
-        uploaded.add(data);
+          // * get image download link
+          String link;
+          await storage.ref('images/$newName').getDownloadURL().then((value) => link = value);
+
+          // * if upload success
+          Map<String, dynamic> data = {
+            'user': userModel.profile['email'],
+            'image': 'images/$newName',
+            'link': link,
+          };
+
+          uploaded.add(data);
+        });
       } catch (e) {
         print(e.toString());
       }
@@ -384,12 +386,9 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     */
     for (var item in uploaded) {
       FirebaseFirestore.instance.collection('images').add(item);
-      // * get image download link
-      await storage.ref('${item['image']}').getDownloadURL().then((value) => links.add(value));
     }
     // * add new images to image model
     imageModel.addImages(uploaded);
-    photosModel.appendLinks(links);
 
     Navigator.pop(context);
   }

@@ -4,7 +4,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import '/components/img_cached_gallery_container.dart';
 import '/constants.dart';
-import '/models/photos_model.dart';
 import '/screens/gallery/photo_view_screen.dart';
 import '/screens/upload_photos/upload_photo_screen.dart';
 
@@ -18,7 +17,6 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
   @override
   bool get wantKeepAlive => true;
 
-  PhotosModel photosModel;
   ImageModel imageModel;
 
   Future<void> _onRefresh() async {
@@ -29,7 +27,6 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
   @override
   void initState() {
     super.initState();
-    photosModel = context.read<PhotosModel>();
     imageModel = context.read<ImageModel>();
   }
 
@@ -75,8 +72,8 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
               SizedBox(
                 height: 10,
               ),
-              Consumer2<PhotosModel, ImageModel>(
-                builder: (context, photosModel, imageModel, child) {
+              Consumer<ImageModel>(
+                builder: (context, imageModel, child) {
                   return Flexible(
                     fit: FlexFit.tight,
                     child: StaggeredGridView.countBuilder(
@@ -85,7 +82,7 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                       crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 8 : 4,
                       mainAxisSpacing: 6.0,
                       crossAxisSpacing: 6.0,
-                      itemCount: photosModel.imgLinksLength,
+                      itemCount: imageModel.length,
                       staggeredTileBuilder: (int index) => new StaggeredTile.count(2, index.isEven ? 2 : 2),
                       itemBuilder: (BuildContext context, index) {
                         return InkWell(
@@ -97,11 +94,11 @@ class _GalleryScreenState extends State<GalleryScreen> with AutomaticKeepAliveCl
                             ),
                             elevation: 2,
                             child: CachedImageGalleryContainer(
-                              imgUrl: photosModel.imgLinks[index] ?? "",
+                              imgUrl: imageModel.images[index]['link'] ?? "",
                             ),
                           ),
                           onTap: () {
-                            photosModel.setImgUrl(photosModel.imgLinks[index] ?? "");
+                            imageModel.setShowIndex(index);
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => PhotoviewScreen()),
