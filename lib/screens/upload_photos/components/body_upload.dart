@@ -89,7 +89,7 @@ class _BodyUploadPhotosState extends State<BodyUploadPhotos> {
     if (!mounted) return;
 
     if (listImageForPreview.length != 0) {
-      // Add image if images not fully. (limited by maxImageLimit).
+      // * Add image if images not fully. (limited by maxImageLimit).
       if (listImageForPreview.length < maxImageLimit && (resultList.length + listImageForPreview.length) <= maxImageLimit) {
         setState(() {
           listImagesForUpload.addAll(resultList);
